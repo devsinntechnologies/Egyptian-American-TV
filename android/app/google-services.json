@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "197351301825",
+    "project_id": "egyptian-american-tv",
+    "storage_bucket": "egyptian-american-tv.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:197351301825:android:10d621e7ee778b4e622a40",
+        "android_client_info": {
+          "package_name": "com.example.egyptian_american_tv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "197351301825-5rl1vg22hvj59v01tfljpj91svi1nj16.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5r1mF_g-8P7gE8BiexE5Nzfbn_RKWwaU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "197351301825-5rl1vg22hvj59v01tfljpj91svi1nj16.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
