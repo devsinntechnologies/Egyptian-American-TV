@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       // debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.green,
+        primaryColor: Colors.grey,
         // secondaryHeaderColor: kPrimaryColor,
       ),
       home: AddPlayListScreen(),
