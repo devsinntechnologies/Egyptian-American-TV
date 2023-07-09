@@ -1,13 +1,15 @@
 import 'dart:developer';
 import 'dart:io';
 import 'dart:math';
-import 'package:egypt_american/utils/constant.dart';
-import 'package:egypt_american/utils/custom_video_player.dart';
-import 'package:egypt_american/utils/customTile.dart';
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+
+import '../utils/constant.dart';
+import '../utils/customTile.dart';
+import '../utils/custom_video_player.dart';
 
 class AddVideoScreen extends StatefulWidget {
   var playListName;

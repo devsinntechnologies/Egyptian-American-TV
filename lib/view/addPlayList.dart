@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:egypt_american/view/addVideoScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../utils/constant.dart';
 import '../utils/customTile.dart';
+import 'addVideoScreen.dart';
 
 class AddPlayListScreen extends StatefulWidget {
   const AddPlayListScreen({super.key});
