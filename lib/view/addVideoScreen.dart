@@ -58,8 +58,6 @@ class _AddVideoScreenState extends State<AddVideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // print(video);
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
