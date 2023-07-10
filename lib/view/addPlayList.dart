@@ -131,7 +131,6 @@ class _AddPlayListScreenState extends State<AddPlayListScreen> {
                         },
                         cancelBtn: () {
                           Navigator.of(context).pop();
-
                           setState(() {});
                         },
                       );

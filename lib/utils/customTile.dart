@@ -10,8 +10,14 @@ Widget customTile(
     iconColor}) {
   return Container(
     // decoration: BoxDecoration(),
-    decoration: BoxDecoration(border: Border(bottom: BorderSide())),
+    decoration: BoxDecoration(
+      // shape: BoxShape.circle,
+      border: Border(
+        bottom: BorderSide(),
+      ),
+    ),
     child: ListTile(
+      // minVerticalPadding:,
       //     shape: BeveledRectangleBorder( //<-- SEE HERE
       //   side: BorderSide(width: 2),
       //   borderRadius: BorderRadius.circular(20),
@@ -20,10 +26,13 @@ Widget customTile(
       onTap: tileTap,
       tileColor: Colors.grey[200],
       leading: Container(
-        color: Colors.grey[400],
-        width: 70,
-        height: 150,
+        width: 50,
+        height: 60,
         child: child,
+        decoration: BoxDecoration(
+            color: Colors.grey[400],
+            // shape: BoxShape.circle,
+            borderRadius: BorderRadius.circular(15)),
       ),
       title: Text(title),
       subtitle: Text(subtitle),
