@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:egyptian_american_tv/utils/customAlert.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
@@ -99,24 +101,44 @@ class _AddPlayListScreenState extends State<AddPlayListScreen> {
           children: [
             for (int i = 0; i < playLists.length; i++)
               customTile(
-                  child: Image(image: AssetImage('assets/images/avatar.jpg')),
-                  title: '${playLists[i]}',
-                  iconColor: kWarningColor,
-                  subtitle: '${i + 1}',
-                  icon: Icons.delete,
-                  tileTap: () {
-                    Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                        builder: (_) =>
-                            AddVideoScreen(playListName: playLists[i]),
-                      ),
-                    );
-                  },
-                  iconTap: () {
-                    playLists.removeAt(i);
-                    setState(() {});
-                  }),
+                child: Image(image: AssetImage('assets/images/avatar.jpg')),
+                title: '${playLists[i]}',
+                iconColor: kWarningColor,
+                subtitle: '${i + 1}',
+                icon: Icons.delete,
+                tileTap: () {
+                  Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (_) =>
+                          AddVideoScreen(playListName: playLists[i]),
+                    ),
+                  );
+                },
+                iconTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return customAlert(
+                        // primaryColor: kWarningColor,
+                        // secondaryColor: kWarningSecondary,
+                        title: "Are you sure!",
+                        content: Text('Do you want this Playlist?'),
+                        deleteBtn: () {
+                          playLists.removeAt(i);
+                          Navigator.of(context).pop();
+                          setState(() {});
+                        },
+                        cancelBtn: () {
+                          Navigator.of(context).pop();
+
+                          setState(() {});
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
           ],
         ),
       ),
