@@ -1,6 +1,6 @@
 {
-    "name": "egyptian_american_tv",
-    "short_name": "egyptian_american_tv",
+    "name": "egy_us_tv_admin",
+    "short_name": "egy_us_tv_admin",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-# egyptian_american_tv
+# egy_us_tv_admin
 
 A new Flutter project.
 

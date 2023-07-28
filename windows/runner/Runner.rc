@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "egyptian_american_tv" "\0"
+            VALUE "FileDescription", "admin egy us tv" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "egyptian_american_tv" "\0"
+            VALUE "InternalName", "admin egy us tv" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2023 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "egyptian_american_tv.exe" "\0"
-            VALUE "ProductName", "egyptian_american_tv" "\0"
+            VALUE "OriginalFilename", "egy_us_tv_admin.exe" "\0"
+            VALUE "ProductName", "admin egy us tv" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

@@ -1,7 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.egyptian_american_tv">
+    package="com.example.egy_us_tv_admin">
+   <uses-permission android:name="android.permission.INTERNET" />
+   <uses-permission android:name="android.permission.CAMERA" />
+   <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
    <application
-        android:label="egyptian_american_tv"
+        android:label="admin egy us tv"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
