@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:egy_us_tv_admin/utils/preferences.dart';
+import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:egy_us_tv_admin/view/auth/login.dart';
 import 'package:egy_us_tv_admin/view/home.dart';
 import 'package:flutter/material.dart';
@@ -13,22 +15,16 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   startTimer() async {
-    var _duration = Duration(seconds: 2);
+    var _duration = Duration(seconds: 5);
     return Timer(_duration, navigationPage);
   }
 
-  void navigationPage() {
-    var accessToken = getStringAsync('token');
-    if (accessToken == null || accessToken == "") {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const EmailLogin()),
-          (route) => false);
-    } else {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const Home()),
-          (route) => false);
+  void navigationPage() async{
+    var token = await Preference.getToken();
+    if (token != null) {
+          pushUntil(context, Home());
+    }else{
+          pushUntil(context, EmailLogin());
     }
   }
 
