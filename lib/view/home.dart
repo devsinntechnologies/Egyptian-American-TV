@@ -294,11 +294,15 @@
 import 'dart:ui';
 
 import 'package:egy_us_tv_admin/config/color.dart';
+import 'package:egy_us_tv_admin/utils/utils.dart';
+import 'package:egy_us_tv_admin/view/auth/login.dart';
 import 'package:egy_us_tv_admin/view/playlist.dart';
 import 'package:egy_us_tv_admin/widgets/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:provider/provider.dart';
 
+import '../controller/provider/login_provider.dart';
 import '../widgets/alert.dart';
 
 class Home extends StatefulWidget {
@@ -320,268 +324,277 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: MediaQuery.of(context).size.height * .01,
-              horizontal: MediaQuery.of(context).size.width * .01,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: 35,
-                      width: 35,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                "assets/main_logo.png",
-                              ),
-                              fit: BoxFit.contain)),
-                    ),
-                    Text(
-                      "Dashboard",
-                      style: TextStyle(
-                          color: ColorConstants.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 22),
-                    ),
-                    Container(),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "WELCOME ADMIN!",
-                          style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w600,
-                              color: ColorConstants.black),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          "Good Morning",
-                          style: TextStyle(
-                              fontSize: 14, color: ColorConstants.active),
-                        ),
-                      ],
-                    ),
-                    InkWell(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return Alert(
-                              text1:
-                                  'Are you sure you want to stop Tv Stream and  go Live?',
-                              textbutton1: 'Live',
-                              buttoncolor: ColorConstants.red,
-                              buttoncolor2: ColorConstants.black,
-                              onPressed: () {
-                                // logout(context: context).then((value) {
-                                //   selectedItemPosition = 0;
-
-                                //   removeKey("token");
-                                //   Navigator.of(context).pushNamedAndRemoveUntil(
-                                //       AppRoutes.login,
-                                //       (Route<dynamic> route) => false);
-                                // });
-                              },
-                            );
+        body: Builder(builder: (context) {
+          var myProvider = context.watch<LoginProvider>();
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: MediaQuery.of(context).size.height * .01,
+                horizontal: MediaQuery.of(context).size.width * .01,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        height: 35,
+                        width: 35,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  "assets/main_logo.png",
+                                ),
+                                fit: BoxFit.contain)),
+                      ),
+                      Text(
+                        "Dashboard",
+                        style: TextStyle(
+                            color: ColorConstants.black,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 22),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            myProvider.logout();
+                            pushUntil(context, EmailLogin());
                           },
-                        );
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: ColorConstants.active),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "LIVE",
-                            style: TextStyle(color: ColorConstants.red),
+                          icon: Icon(Icons.logout)),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "WELCOME ADMIN!",
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: ColorConstants.black),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Good Morning",
+                            style: TextStyle(
+                                fontSize: 14, color: ColorConstants.active),
+                          ),
+                        ],
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Alert(
+                                text1:
+                                    'Are you sure you want to stop Tv Stream and  go Live?',
+                                textbutton1: 'Live',
+                                buttoncolor: ColorConstants.red,
+                                buttoncolor2: ColorConstants.black,
+                                onPressed: () {
+                                  // logout(context: context).then((value) {
+                                  //   selectedItemPosition = 0;
+
+                                  //   removeKey("token");
+                                  //   Navigator.of(context).pushNamedAndRemoveUntil(
+                                  //       AppRoutes.login,
+                                  //       (Route<dynamic> route) => false);
+                                  // });
+                                },
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              border: Border.all(color: ColorConstants.active),
+                              borderRadius: BorderRadius.circular(12)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              "LIVE",
+                              style: TextStyle(color: ColorConstants.red),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * .6,
-                      // color: Colors.amber,
-                      child: Container(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            novideo(context),
-                            Container(
-                              height: 200,
-                              child: ScrollConfiguration(
-                                behavior: MyCustomScrollBehavior(),
-                                child: ListView.builder(
-                                    itemCount: images.length,
-                                    shrinkWrap: true,
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Stack(
-                                          children: [
-                                            Container(
-                                              height: 200,
-                                              width: 180,
-                                              decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  image: DecorationImage(
-                                                      image: NetworkImage(
-                                                          images[index]),
-                                                      fit: BoxFit.cover)),
-                                            ),
-                                            Container(
-                                              height: 200,
-                                              width: 180,
-                                              color: Colors.black12,
-                                            ),
-                                            const Positioned(
-                                                bottom: 15,
-                                                left: 10,
-                                                child: Icon(
-                                                  Icons.play_arrow,
-                                                  color: Colors.white,
-                                                )),
-                                            Positioned(
-                                                bottom: 15,
-                                                right: 10,
-                                                child: Container(
-                                                  color: Colors.black87,
-                                                  child: const Padding(
-                                                    padding:
-                                                        EdgeInsets.all(3.0),
-                                                    child: Text(
-                                                      "05:20",
-                                                      style: TextStyle(
-                                                          color: Colors.white,
-                                                          fontSize: 11),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * .6,
+                        // color: Colors.amber,
+                        child: Container(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              novideo(context),
+                              Container(
+                                height: 200,
+                                child: ScrollConfiguration(
+                                  behavior: MyCustomScrollBehavior(),
+                                  child: ListView.builder(
+                                      itemCount: images.length,
+                                      shrinkWrap: true,
+                                      physics: AlwaysScrollableScrollPhysics(),
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Stack(
+                                            children: [
+                                              Container(
+                                                height: 200,
+                                                width: 180,
+                                                decoration: BoxDecoration(
+                                                    color: Colors.black,
+                                                    image: DecorationImage(
+                                                        image: NetworkImage(
+                                                            images[index]),
+                                                        fit: BoxFit.cover)),
+                                              ),
+                                              Container(
+                                                height: 200,
+                                                width: 180,
+                                                color: Colors.black12,
+                                              ),
+                                              const Positioned(
+                                                  bottom: 15,
+                                                  left: 10,
+                                                  child: Icon(
+                                                    Icons.play_arrow,
+                                                    color: Colors.white,
+                                                  )),
+                                              Positioned(
+                                                  bottom: 15,
+                                                  right: 10,
+                                                  child: Container(
+                                                    color: Colors.black87,
+                                                    child: const Padding(
+                                                      padding:
+                                                          EdgeInsets.all(3.0),
+                                                      child: Text(
+                                                        "05:20",
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 11),
+                                                      ),
                                                     ),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      );
-                                    }),
+                                                  )),
+                                            ],
+                                          ),
+                                        );
+                                      }),
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: MediaQuery.of(context).size.width * .3,
-                      child: Column(children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              "Latest Playlist",
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: ColorConstants.black),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Playlist()));
-                              },
-                              child: Text(
-                                "see all",
+                      Container(
+                        width: MediaQuery.of(context).size.width * .3,
+                        child: Column(children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Latest Playlist",
                                 style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.w600,
                                     color: ColorConstants.black),
                               ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Playlist()));
+                                },
+                                child: Text(
+                                  "see all",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: ColorConstants.black),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          for (int i = 0; i < 5; i++) ...[
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 4.0),
+                              child: Container(
+                                  width: MediaQuery.of(context).size.width * .3,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: ColorConstants.white)),
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    leading: Container(
+                                        height: 40,
+                                        width: 40,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(12),
+                                            image: const DecorationImage(
+                                                image: NetworkImage(
+                                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
+                                                fit: BoxFit.fitHeight))),
+                                    subtitle: Marquee(
+                                        direction: Axis.horizontal,
+                                        directionMarguee:
+                                            DirectionMarguee.oneDirection,
+                                        child: Container(
+                                          width: 200,
+                                          child: const Text(
+                                            "Lay Down Your Demo Scratch Vocal. ...Embellish. ...Lay Down Your Vocals. ...Put A Mix On It. ...",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        )),
+                                    title: Text(
+                                      "Playlist 1",
+                                      style: TextStyle(
+                                          color: ColorConstants.black,
+                                          fontSize: 16),
+                                    ),
+                                    trailing: Icon(
+                                      Icons.playlist_play,
+                                      color: ColorConstants.black,
+                                    ),
+                                  )),
                             ),
                           ],
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        for (int i = 0; i < 5; i++) ...[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0),
-                            child: Container(
-                                width: MediaQuery.of(context).size.width * .3,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: ColorConstants.white)),
-                                child: ListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  leading: Container(
-                                      height: 40,
-                                      width: 40,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(12),
-                                          image: const DecorationImage(
-                                              image: NetworkImage(
-                                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
-                                              fit: BoxFit.fitHeight))),
-                                  subtitle: Marquee(
-                                      direction: Axis.horizontal,
-                                      directionMarguee:
-                                          DirectionMarguee.oneDirection,
-                                      child: Container(
-                                        width: 200,
-                                        child: const Text(
-                                          "Lay Down Your Demo Scratch Vocal. ...Embellish. ...Lay Down Your Vocals. ...Put A Mix On It. ...",
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      )),
-                                  title: Text(
-                                    "Playlist 1",
-                                    style: TextStyle(
-                                        color: ColorConstants.black,
-                                        fontSize: 16),
-                                  ),
-                                  trailing: Icon(
-                                    Icons.playlist_play,
-                                    color: ColorConstants.black,
-                                  ),
-                                )),
-                          ),
-                        ],
-                      ]),
-                    ),
-                  ],
-                ),
-              ],
+                        ]),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
-        ));
+          );
+        }));
   }
 }
 

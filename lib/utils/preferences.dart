@@ -6,7 +6,7 @@ class Preference {
   static saveToken(token) async {
     try {
       var pref = await SharedPreferences.getInstance();
-      pref.setString(tokenKey, token);
+      pref.setString(tokenKey, '${token}');
       return true;
     } catch (e) {
       return false;
@@ -19,5 +19,10 @@ class Preference {
     if (data != null) {
       return data;
     }
+  }
+
+  static remveToken() async {
+    var pref = await SharedPreferences.getInstance();
+    pref.remove(tokenKey);
   }
 }
