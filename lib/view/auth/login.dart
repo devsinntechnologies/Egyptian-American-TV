@@ -131,7 +131,7 @@ class _EmailLoginState extends State<EmailLogin> {
                           },
                           child: Container(
                             decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: ColorConstants.primaryColor,
                                 borderRadius: BorderRadius.all(Radius.circular(5)),
                                 border:
                                     Border.all(color: ColorConstants.primaryColor)),
@@ -141,7 +141,7 @@ class _EmailLoginState extends State<EmailLogin> {
                               child: Text(
                                 'Login',
                                 style: TextStyle(
-                                  color: ColorConstants.primaryColor,
+                                  color: ColorConstants.white,
                                   fontSize: 16,
                                 ),
                               ),
