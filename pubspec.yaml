@@ -47,6 +47,8 @@ dependencies:
   mime_type: ^1.0.0
   http:
   shared_preferences: ^2.2.0
+  
+  # video_player: ^2.7.0
 
 dev_dependencies:
   flutter_test:

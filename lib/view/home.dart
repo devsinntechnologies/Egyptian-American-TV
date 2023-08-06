@@ -294,6 +294,7 @@
 import 'dart:ui';
 
 import 'package:egy_us_tv_admin/config/color.dart';
+import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
 import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:egy_us_tv_admin/view/auth/login.dart';
 import 'package:egy_us_tv_admin/view/playlist.dart';
@@ -320,6 +321,15 @@ class _HomeState extends State<Home> {
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVizbW8JO1a8kEwNDGUo4MzMabdA3LQONy7bRkdNvohgdcgg1saqK_KQF0ShEcqyw5Rto&usqp=CAU",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScETz1S6DFb1HWOt4XQZYjyc8xxIFQKmWMJWLCXaZPq0rNx3c7tvFIU16lAB7wJ3OxLEo&usqp=CAU",
   ];
+
+
+  @override
+  void initState() {
+    var provider  = context.read<PlaylistProvider>();
+    provider.getPlaylist(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -540,7 +550,11 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             height: 15,
                           ),
-                          for (int i = 0; i < 5; i++) ...[
+          Builder(builder: (context){
+            var provider = context.watch<PlaylistProvider>();
+
+            return provider.isLoading ? Center(child: CircularProgressIndicator.adaptive(),) : Column(children: [
+          for(int i = 0; i < provider.playlist["data"].length ; i++)
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(vertical: 4.0),
@@ -574,7 +588,7 @@ class _HomeState extends State<Home> {
                                           ),
                                         )),
                                     title: Text(
-                                      "Playlist 1",
+                                      provider.playlist["data"][i]["name"],
                                       style: TextStyle(
                                           color: ColorConstants.black,
                                           fontSize: 16),
@@ -585,7 +599,10 @@ class _HomeState extends State<Home> {
                                     ),
                                   )),
                             ),
-                          ],
+                          
+            ],);
+          }),
+                  
                         ]),
                       ),
                     ],

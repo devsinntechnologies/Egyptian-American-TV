@@ -1,4 +1,5 @@
 import 'package:egy_us_tv_admin/controller/provider/login_provider.dart';
+import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
 import 'package:egy_us_tv_admin/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -19,7 +20,8 @@ class MyApp extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => LoginProvider())
+        ChangeNotifierProvider(create: (context) => LoginProvider()),
+        ChangeNotifierProvider(create: (context) => PlaylistProvider())
       ],
 
       child: Sizer(builder: (context, orientation, deviceType) {
