@@ -240,6 +240,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.2.2"
+  fullscreen_window:
+    dependency: transitive
+    description:
+      name: fullscreen_window
+      sha256: fe3014f91bff16a82d142ba9d834980b8a84b4bb03347a92588d389ad92bd1d3
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   get_it:
     dependency: transitive
     description:
@@ -368,6 +376,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  logging:
+    dependency: transitive
+    description:
+      name: logging
+      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.0"
   lottie:
     dependency: "direct main"
     description:
@@ -629,6 +645,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  socket_io_client:
+    dependency: "direct main"
+    description:
+      name: socket_io_client
+      sha256: ede469f3e4c55e8528b4e023bdedbc20832e8811ab9b61679d1ba3ed5f01f23b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3+1"
+  socket_io_common:
+    dependency: transitive
+    description:
+      name: socket_io_common
+      sha256: "2ab92f8ff3ebbd4b353bf4a98bee45cc157e3255464b2f90f66e09c4472047eb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   source_span:
     dependency: transitive
     description:
@@ -637,6 +669,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -725,6 +765,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.9"
+  video_player_control_panel:
+    dependency: "direct main"
+    description:
+      name: video_player_control_panel
+      sha256: "56f3994070cde45913d62881269939058bd010d224c377b4bce0fbfcbaabda68"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   video_player_platform_interface:
     dependency: transitive
     description:
@@ -741,6 +789,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.16"
+  video_player_win:
+    dependency: transitive
+    description:
+      name: video_player_win
+      sha256: f752953e9f805d045c11204665d794b6d923bfb1257426421881c2c1b3ea3354
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.2"
+  web_socket_channel:
+    dependency: "direct main"
+    description:
+      name: web_socket_channel
+      sha256: d88238e5eac9a42bb43ca4e721edba3c08c6354d4a53063afaa568516217621b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.0"
   win32:
     dependency: transitive
     description:

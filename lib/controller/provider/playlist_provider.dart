@@ -18,13 +18,24 @@ class PlaylistProvider extends ChangeNotifier {
   }
 
 
+
   addPlaylist(context,name)async{
     isLoading = true;
     notifyListeners();
     // playlist = null;
     await ApiManager.addPlaylist(context, name);
-    // playlist = await ApiManager.getPlaylist(context);
+    playlist = await ApiManager.getPlaylist(context);
     isLoading = false;
     notifyListeners();
+  }
+
+
+
+  deletePlaylist(context,id)async{
+    isLoading = true;
+    // notifyListeners();
+    await ApiManager.deletePlaylist(context, id);
+    isLoading = false;
+    // notifyListeners();
   }
 }

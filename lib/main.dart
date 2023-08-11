@@ -1,5 +1,6 @@
 import 'package:egy_us_tv_admin/controller/provider/login_provider.dart';
 import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
+import 'package:egy_us_tv_admin/controller/provider/socket_provider.dart';
 import 'package:egy_us_tv_admin/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -7,9 +8,11 @@ import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialize();
+  
   runApp(const MyApp());
 }
 
@@ -21,7 +24,8 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => LoginProvider()),
-        ChangeNotifierProvider(create: (context) => PlaylistProvider())
+        ChangeNotifierProvider(create: (context) => PlaylistProvider()),
+        ChangeNotifierProvider(create: (context) => SocketProvider()),
       ],
 
       child: Sizer(builder: (context, orientation, deviceType) {

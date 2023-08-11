@@ -8,6 +8,8 @@ const getPlaylistEndpoint = "playlist/getAllPlaylist";
 
 const addPlaylistEndpoint = "playlist/addNewPlaylist";
 
+const deletePlaylistEndpoint = "playlist/deletePlaylist/";
+
 
 
 

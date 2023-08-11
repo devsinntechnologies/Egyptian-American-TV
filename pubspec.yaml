@@ -40,13 +40,16 @@ dependencies:
   provider: ^6.0.5
   sizer: ^2.0.15
   lottie: ^2.3.2
-  image_picker: ^1.0.0
-  video_player: ^2.7.0
+  image_picker:
+  video_player:
   google_fonts: ^4.0.4
   msix: ^3.15.0
   mime_type: ^1.0.0
   http:
   shared_preferences: ^2.2.0
+  video_player_control_panel: ^1.1.0
+  web_socket_channel: ^2.4.0
+  socket_io_client: ^2.0.3+1
   
   # video_player: ^2.7.0
 

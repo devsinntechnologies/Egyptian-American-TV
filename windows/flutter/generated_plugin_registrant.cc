@@ -8,13 +8,19 @@
 
 #include <connectivity_plus/connectivity_plus_windows_plugin.h>
 #include <file_selector_windows/file_selector_windows.h>
+#include <fullscreen_window/fullscreen_window_plugin_c_api.h>
 #include <nb_utils/nb_utils_plugin.h>
+#include <video_player_win/video_player_win_plugin_c_api.h>
 
 void RegisterPlugins(flutter::PluginRegistry* registry) {
   ConnectivityPlusWindowsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("ConnectivityPlusWindowsPlugin"));
   FileSelectorWindowsRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("FileSelectorWindows"));
+  FullscreenWindowPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("FullscreenWindowPluginCApi"));
   NbUtilsPluginRegisterWithRegistrar(
       registry->GetRegistrarForPlugin("NbUtilsPlugin"));
+  VideoPlayerWinPluginCApiRegisterWithRegistrar(
+      registry->GetRegistrarForPlugin("VideoPlayerWinPluginCApi"));
 }

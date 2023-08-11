@@ -55,6 +55,23 @@ class ApiManager {
       showSnackBar(context, e.toString());
     }
   }
+
+
+    ///  Delete PlayList
+
+  static deletePlaylist(context, id) async {
+    try {
+      var url = Uri.parse(BASE_URL + deletePlaylistEndpoint + id);
+      var response = await http.delete(url);
+
+      var res = jsonDecode(response.body);
+  showSnackBar(context, res["message"]);
+      return res;
+
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 }
 
 // "1124" + "9999" = "11249999"

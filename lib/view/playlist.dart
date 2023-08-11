@@ -44,9 +44,13 @@ class _PlaylistState extends State<Playlist> {
     provider.getPlaylist(context);
   }
 
+      final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -261,7 +265,10 @@ class _PlaylistState extends State<Playlist> {
                                                               ColorConstants.red,
                                                           buttoncolor2:
                                                               ColorConstants.black,
-                                                          onPressed: () {},
+                                                          onPressed: () {
+                                                            Navigator.pop(context);
+                                                            provider.deletePlaylist(context,provider.playlist["data"][i]["id"] );
+                                                          },
                                                         );
                                                       },
                                                     );
@@ -443,9 +450,9 @@ class _PlaylistState extends State<Playlist> {
                                                   if (title.text.isEmpty) {
                                                     showSnackBar(context, "Please! Enter Name");
                                                   }else{
-                          
+                          pop(context);
+                                                  //  Navigator.pop(context);
                           bloc.addPlaylist(context, title.text);
-                                                   Navigator.pop(context);
                           
                                                   }
                           

@@ -302,8 +302,11 @@ import 'package:egy_us_tv_admin/widgets/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
+import 'package:video_player/video_player.dart';
+import 'package:video_player_control_panel/video_player_control_panel.dart';
 
 import '../controller/provider/login_provider.dart';
+import '../socket/connection.dart';
 import '../widgets/alert.dart';
 
 class Home extends StatefulWidget {
@@ -322,12 +325,43 @@ class _HomeState extends State<Home> {
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScETz1S6DFb1HWOt4XQZYjyc8xxIFQKmWMJWLCXaZPq0rNx3c7tvFIU16lAB7wJ3OxLEo&usqp=CAU",
   ];
 
-
   @override
   void initState() {
-    var provider  = context.read<PlaylistProvider>();
+    var provider = context.read<PlaylistProvider>();
     provider.getPlaylist(context);
+    playPrevVideo("http://50.16.82.20/videos/video3.mp4");
     super.initState();
+    connection();
+  }
+
+  VideoPlayerController? controller;
+
+  void playPrevVideo(url) {
+    playVideo(url);
+  }
+
+  void playVideo(url) {
+    // controller?.dispose();
+
+    var path = url;
+    controller = VideoPlayerController.network(path);
+
+    // var captionFile = Future.value(SubRipCaptionFile(generateCaptionFileContent()));
+    // controller!.setClosedCaptionFile(captionFile);
+
+    setState(() {});
+    controller!.initialize().then((value) {
+      if (!controller!.value.isInitialized) {
+        log("controller.initialize() failed");
+        return;
+      }
+
+      controller!.play();
+
+      // NOTE: web not allowed auto play without user interaction
+    }).catchError((e) {
+      log("controller.initialize() error occurs: $e");
+    });
   }
 
   @override
@@ -454,7 +488,24 @@ class _HomeState extends State<Home> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              novideo(context),
+                              controller == null
+                                  ? Center(
+                                      child:
+                                          CircularProgressIndicator.adaptive(),
+                                    )
+                                  : Container(
+                                      width:
+                                          MediaQuery.of(context).size.height *
+                                              7,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              .6,
+                                      child: JkVideoControlPanel(
+                                        controller!,
+                                        showClosedCaptionButton: false,
+                                        showFullscreenButton: false,
+                                        showVolumeButton: false,
+                                      )),
                               Container(
                                 height: 200,
                                 child: ScrollConfiguration(
@@ -550,59 +601,75 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             height: 15,
                           ),
-          Builder(builder: (context){
-            var provider = context.watch<PlaylistProvider>();
+                          Builder(builder: (context) {
+                            var provider = context.watch<PlaylistProvider>();
 
-            return provider.isLoading ? Center(child: CircularProgressIndicator.adaptive(),) : Column(children: [
-          for(int i = 0; i < provider.playlist["data"].length ; i++)
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width * .3,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: ColorConstants.white)),
-                                  child: ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    leading: Container(
-                                        height: 40,
-                                        width: 40,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            image: const DecorationImage(
-                                                image: NetworkImage(
-                                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
-                                                fit: BoxFit.fitHeight))),
-                                    subtitle: Marquee(
-                                        direction: Axis.horizontal,
-                                        directionMarguee:
-                                            DirectionMarguee.oneDirection,
-                                        child: Container(
-                                          width: 200,
-                                          child: const Text(
-                                            "Lay Down Your Demo Scratch Vocal. ...Embellish. ...Lay Down Your Vocals. ...Put A Mix On It. ...",
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        )),
-                                    title: Text(
-                                      provider.playlist["data"][i]["name"],
-                                      style: TextStyle(
-                                          color: ColorConstants.black,
-                                          fontSize: 16),
-                                    ),
-                                    trailing: Icon(
-                                      Icons.playlist_play,
-                                      color: ColorConstants.black,
-                                    ),
-                                  )),
-                            ),
-                          
-            ],);
-          }),
-                  
+                            return provider.isLoading
+                                ? Center(
+                                    child: CircularProgressIndicator.adaptive(),
+                                  )
+                                : Column(
+                                    children: [
+                                      for (int i = 0;
+                                          i < provider.playlist["data"].length;
+                                          i++)
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 4.0),
+                                          child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  .3,
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: ColorConstants
+                                                          .white)),
+                                              child: ListTile(
+                                                contentPadding: EdgeInsets.zero,
+                                                leading: Container(
+                                                    height: 40,
+                                                    width: 40,
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(12),
+                                                        image: const DecorationImage(
+                                                            image: NetworkImage(
+                                                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
+                                                            fit: BoxFit
+                                                                .fitHeight))),
+                                                subtitle: Marquee(
+                                                    direction: Axis.horizontal,
+                                                    directionMarguee:
+                                                        DirectionMarguee
+                                                            .oneDirection,
+                                                    child: Container(
+                                                      width: 200,
+                                                      child: const Text(
+                                                        "Lay Down Your Demo Scratch Vocal. ...Embellish. ...Lay Down Your Vocals. ...Put A Mix On It. ...",
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    )),
+                                                title: Text(
+                                                  provider.playlist["data"][i]
+                                                      ["name"],
+                                                  style: TextStyle(
+                                                      color:
+                                                          ColorConstants.black,
+                                                      fontSize: 16),
+                                                ),
+                                                trailing: Icon(
+                                                  Icons.playlist_play,
+                                                  color: ColorConstants.black,
+                                                ),
+                                              )),
+                                        ),
+                                    ],
+                                  );
+                          }),
                         ]),
                       ),
                     ],
