@@ -1,6 +1,6 @@
 
 
-const BASE_URL = "http://50.16.82.20:3000/api/";
+const BASE_URL = "http://54.196.245.7:3000/api/";
 
 const loginEndPoint = "auth/login";
 

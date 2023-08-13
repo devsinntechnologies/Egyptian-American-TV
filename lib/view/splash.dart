@@ -6,6 +6,7 @@ import 'package:egy_us_tv_admin/view/home.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../config/images.dart';
+import '../socket/connection.dart';
 import 'bottombar.dart';
 
 class SplashPage extends StatefulWidget {
@@ -19,18 +20,19 @@ class _SplashPageState extends State<SplashPage> {
     return Timer(_duration, navigationPage);
   }
 
-  void navigationPage() async{
+  void navigationPage() async {
     var token = await Preference.getToken();
     if (token != null) {
-          pushUntil(context, Home());
-    }else{
-          pushUntil(context, EmailLogin());
+      pushUntil(context, Home());
+    } else {
+      pushUntil(context, EmailLogin());
     }
   }
 
   @override
   void initState() {
     startTimer();
+
     super.initState();
   }
 

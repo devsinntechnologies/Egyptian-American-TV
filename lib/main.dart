@@ -1,20 +1,24 @@
+import 'package:egy_us_tv_admin/chat.dart';
 import 'package:egy_us_tv_admin/controller/provider/login_provider.dart';
 import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
 import 'package:egy_us_tv_admin/controller/provider/socket_provider.dart';
+import 'package:egy_us_tv_admin/socket/connection.dart';
 import 'package:egy_us_tv_admin/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initialize();
-  
+
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -36,6 +40,7 @@ class MyApp extends StatelessWidget {
                 ),
           ),
           debugShowCheckedModeBanner: false,
+          // home: ChatScreen(),
           home: SplashPage(),
         );
       }),

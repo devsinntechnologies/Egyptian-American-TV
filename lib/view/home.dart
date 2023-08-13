@@ -295,6 +295,7 @@ import 'dart:ui';
 
 import 'package:egy_us_tv_admin/config/color.dart';
 import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
+import 'package:egy_us_tv_admin/controller/provider/socket_provider.dart';
 import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:egy_us_tv_admin/view/auth/login.dart';
 import 'package:egy_us_tv_admin/view/playlist.dart';
@@ -328,49 +329,22 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     var provider = context.read<PlaylistProvider>();
+    var socketProvider = context.read<SocketProvider>();
+       socketProvider.connection();
+       
     provider.getPlaylist(context);
-    playPrevVideo("http://50.16.82.20/videos/video3.mp4");
+    // playPrevVideo("http://50.16.82.20/videos/video3.mp4");
     super.initState();
-    connection();
   }
 
-  VideoPlayerController? controller;
 
-  void playPrevVideo(url) {
-    playVideo(url);
-  }
 
-  void playVideo(url) {
-    // controller?.dispose();
-
-    var path = url;
-    controller = VideoPlayerController.network(path);
-
-    // var captionFile = Future.value(SubRipCaptionFile(generateCaptionFileContent()));
-    // controller!.setClosedCaptionFile(captionFile);
-
-    setState(() {});
-    controller!.initialize().then((value) {
-      if (!controller!.value.isInitialized) {
-        log("controller.initialize() failed");
-        return;
-      }
-
-      controller!.play();
-
-      // NOTE: web not allowed auto play without user interaction
-    }).catchError((e) {
-      log("controller.initialize() error occurs: $e");
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: Builder(builder: (context) {
-          var myProvider = context.watch<LoginProvider>();
-          return SingleChildScrollView(
+        body:  SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
                 vertical: MediaQuery.of(context).size.height * .01,
@@ -401,6 +375,7 @@ class _HomeState extends State<Home> {
                       ),
                       IconButton(
                           onPressed: () {
+                              var myProvider = context.read<LoginProvider>();
                             myProvider.logout();
                             pushUntil(context, EmailLogin());
                           },
@@ -484,87 +459,92 @@ class _HomeState extends State<Home> {
                         width: MediaQuery.of(context).size.width * .6,
                         // color: Colors.amber,
                         child: Container(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              controller == null
-                                  ? Center(
-                                      child:
-                                          CircularProgressIndicator.adaptive(),
-                                    )
-                                  : Container(
-                                      width:
-                                          MediaQuery.of(context).size.height *
-                                              7,
-                                      height:
-                                          MediaQuery.of(context).size.height *
-                                              .6,
-                                      child: JkVideoControlPanel(
-                                        controller!,
-                                        showClosedCaptionButton: false,
-                                        showFullscreenButton: false,
-                                        showVolumeButton: false,
-                                      )),
-                              Container(
-                                height: 200,
-                                child: ScrollConfiguration(
-                                  behavior: MyCustomScrollBehavior(),
-                                  child: ListView.builder(
-                                      itemCount: images.length,
-                                      shrinkWrap: true,
-                                      physics: AlwaysScrollableScrollPhysics(),
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Stack(
-                                            children: [
-                                              Container(
-                                                height: 200,
-                                                width: 180,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.black,
-                                                    image: DecorationImage(
-                                                        image: NetworkImage(
-                                                            images[index]),
-                                                        fit: BoxFit.cover)),
+                          child: Builder(
+                            builder: (context) {
+                                var socketProvider = context.watch<SocketProvider>();
+                              return Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  socketProvider.urls == null
+                                      ? Center(
+                                          child:
+                                              CircularProgressIndicator.adaptive(),
+                                        )
+                                      : Container(
+                                          width:
+                                              MediaQuery.of(context).size.height *
+                                                  7,
+                                          height:
+                                              MediaQuery.of(context).size.height *
+                                                  .6,
+                                          child: JkVideoControlPanel(
+                                            socketProvider.controller!,
+                                            showClosedCaptionButton: false,
+                                            showFullscreenButton: false,
+                                            showVolumeButton: false,
+                                          )),
+                                  Container(
+                                    height: 200,
+                                    child: ScrollConfiguration(
+                                      behavior: MyCustomScrollBehavior(),
+                                      child: ListView.builder(
+                                          itemCount: images.length,
+                                          shrinkWrap: true,
+                                          physics: AlwaysScrollableScrollPhysics(),
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Stack(
+                                                children: [
+                                                  Container(
+                                                    height: 200,
+                                                    width: 180,
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.black,
+                                                        image: DecorationImage(
+                                                            image: NetworkImage(
+                                                                images[index]),
+                                                            fit: BoxFit.cover)),
+                                                  ),
+                                                  Container(
+                                                    height: 200,
+                                                    width: 180,
+                                                    color: Colors.black12,
+                                                  ),
+                                                  const Positioned(
+                                                      bottom: 15,
+                                                      left: 10,
+                                                      child: Icon(
+                                                        Icons.play_arrow,
+                                                        color: Colors.white,
+                                                      )),
+                                                  Positioned(
+                                                      bottom: 15,
+                                                      right: 10,
+                                                      child: Container(
+                                                        color: Colors.black87,
+                                                        child: const Padding(
+                                                          padding:
+                                                              EdgeInsets.all(3.0),
+                                                          child: Text(
+                                                            "05:20",
+                                                            style: TextStyle(
+                                                                color: Colors.white,
+                                                                fontSize: 11),
+                                                          ),
+                                                        ),
+                                                      )),
+                                                ],
                                               ),
-                                              Container(
-                                                height: 200,
-                                                width: 180,
-                                                color: Colors.black12,
-                                              ),
-                                              const Positioned(
-                                                  bottom: 15,
-                                                  left: 10,
-                                                  child: Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                  )),
-                                              Positioned(
-                                                  bottom: 15,
-                                                  right: 10,
-                                                  child: Container(
-                                                    color: Colors.black87,
-                                                    child: const Padding(
-                                                      padding:
-                                                          EdgeInsets.all(3.0),
-                                                      child: Text(
-                                                        "05:20",
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 11),
-                                                      ),
-                                                    ),
-                                                  )),
-                                            ],
-                                          ),
-                                        );
-                                      }),
-                                ),
-                              ),
-                            ],
+                                            );
+                                          }),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
                           ),
                         ),
                       ),
@@ -677,8 +657,8 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-          );
-        }));
+          )
+        );
   }
 }
 
