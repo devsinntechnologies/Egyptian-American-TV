@@ -1,9 +1,12 @@
 // playlist details screen
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:egy_us_tv_admin/model/video_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nb_utils/nb_utils.dart';
+import 'package:video_player_control_panel/video_player_control_panel.dart';
 
 import '../config/color.dart';
 import '../widgets/alert.dart';
@@ -11,7 +14,8 @@ import 'selected_video.dart';
 
 class DetailsPlaylist extends StatefulWidget {
   final String? title;
-  const DetailsPlaylist({super.key, this.title});
+  final videos;
+  const DetailsPlaylist({super.key, this.title, this.videos});
 
   @override
   State<DetailsPlaylist> createState() => _DetailsPlaylistState();
@@ -22,6 +26,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
   getvideo(context) async {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickVideo(source: ImageSource.gallery);
+    debugger();
     if (image != null) {
       videopath = File(image.path);
       Navigator.push(
@@ -90,7 +95,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                       const CircleAvatar(
                         radius: 50,
                         backgroundImage: NetworkImage(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
+                            "assets/main_logo.png"),
                       ),
                       SizedBox(
                         width: 25,
@@ -99,7 +104,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "BigDATA",
+                            "${widget.title}",
                             style: TextStyle(
                                 color: ColorConstants.black,
                                 fontWeight: FontWeight.bold,
@@ -109,7 +114,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                             height: 10,
                           ),
                           Row(
-                            children: const [
+                            children:  [
                               Icon(
                                 Icons.video_collection,
                                 size: 20,
@@ -118,7 +123,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                               SizedBox(
                                 width: 10,
                               ),
-                              Text("5 Vides")
+                              Text("${widget.videos.length} Videos")
                             ],
                           ),
                         ],
@@ -129,8 +134,9 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: images.length,
+                        itemCount: widget.videos!.length,
                         itemBuilder: (context, index) {
+                          VideoModel videoModel = VideoModel.fromJson(widget.videos[index]);
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -152,6 +158,13 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                                                   NetworkImage(images[index]),
                                               fit: BoxFit.cover),
                                         ),
+
+                                        // child: JkVideoControlPanel(
+                                        //     socketProvider.controller!,
+                                        //     showClosedCaptionButton: false,
+                                        //     showFullscreenButton: false,
+                                        //     showVolumeButton: false,
+                                        //   ),
                                       ),
                                       SizedBox(
                                         width: 10,
@@ -163,7 +176,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            "Zaroorat Full Song",
+                                            "${videoModel.name}",
                                             style: TextStyle(
                                                 color: ColorConstants.black,
                                                 fontSize: 16,
@@ -172,11 +185,11 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          Text("5 days ago"),
+                                          Text("${videoModel.createdAt}"),
                                           SizedBox(
                                             height: 5,
                                           ),
-                                          Text("05:02 min")
+                                          // Text("05:02 min")
                                         ],
                                       ),
                                     ],

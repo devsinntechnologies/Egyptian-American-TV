@@ -44,8 +44,7 @@ class _PlaylistState extends State<Playlist> {
     provider.getPlaylist(context);
   }
 
-      final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -89,18 +88,19 @@ class _PlaylistState extends State<Playlist> {
       ),
       body: Builder(builder: (context) {
         var provider = context.watch<PlaylistProvider>();
-    
+
         return provider.isLoading
             ? Center(
                 child: CircularProgressIndicator.adaptive(),
               )
             : SingleChildScrollView(
-              child: RefreshIndicator(
-                  onRefresh: (){
-                        return context.read<PlaylistProvider>().getPlaylist(context);
-
-              },
-                child: Stack(
+                child: RefreshIndicator(
+                  onRefresh: () {
+                    return context
+                        .read<PlaylistProvider>()
+                        .getPlaylist(context);
+                  },
+                  child: Stack(
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(12.0),
@@ -111,7 +111,8 @@ class _PlaylistState extends State<Playlist> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
                                       width: 100,
@@ -182,23 +183,26 @@ class _PlaylistState extends State<Playlist> {
                                 i < provider.playlist["data"].length;
                                 i++) ...[
                               Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4.0),
                                 child: InkWell(
                                   onTap: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                const DetailsPlaylist(
-                                                  title: "Playlist",
+                                                 DetailsPlaylist(
+                                                  title: provider.playlist["data"][i]["name"],
+                                                  videos: provider.playlist["data"][i]
+                                                    ["videos"]
                                                 )));
                                   },
                                   child: Container(
                                     decoration: const BoxDecoration(
                                         color: Colors.white,
                                         border: Border(
-                                            bottom:
-                                                BorderSide(color: Colors.black26))),
+                                            bottom: BorderSide(
+                                                color: Colors.black26))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
@@ -213,11 +217,13 @@ class _PlaylistState extends State<Playlist> {
                                                   width: 40,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
-                                                          BorderRadius.circular(12),
+                                                          BorderRadius.circular(
+                                                              12),
                                                       image: const DecorationImage(
                                                           image: NetworkImage(
                                                               "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
-                                                          fit: BoxFit.fitHeight))),
+                                                          fit: BoxFit
+                                                              .fitHeight))),
                                             ),
                                           ),
                                           Container(
@@ -238,9 +244,10 @@ class _PlaylistState extends State<Playlist> {
                                           ),
                                           Container(
                                             width: 100,
-                                            child: const Center(
+                                            child: Center(
                                               child: Text(
-                                                "15",
+                                                "${provider.playlist["data"][i]
+                                                    ["videos"].length}",
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold,
@@ -262,12 +269,19 @@ class _PlaylistState extends State<Playlist> {
                                                               'Are you sure you want to remove playlist?',
                                                           textbutton1: 'Yes',
                                                           buttoncolor:
-                                                              ColorConstants.red,
+                                                              ColorConstants
+                                                                  .red,
                                                           buttoncolor2:
-                                                              ColorConstants.black,
+                                                              ColorConstants
+                                                                  .black,
                                                           onPressed: () {
-                                                            Navigator.pop(context);
-                                                            provider.deletePlaylist(context,provider.playlist["data"][i]["id"] );
+                                                            Navigator.pop(
+                                                                context);
+                                                            provider.deletePlaylist(
+                                                                context,
+                                                                provider.playlist[
+                                                                        "data"]
+                                                                    [i]["id"]);
                                                           },
                                                         );
                                                       },
@@ -284,7 +298,8 @@ class _PlaylistState extends State<Playlist> {
                                               child: Center(
                                                 child: Icon(
                                                   Icons.play_arrow,
-                                                  color: ColorConstants.lightGreen,
+                                                  color:
+                                                      ColorConstants.lightGreen,
                                                 ),
                                               )),
                                         ],
@@ -292,7 +307,7 @@ class _PlaylistState extends State<Playlist> {
                                     ),
                                   ),
                                 ),
-                          
+
                                 // GestureDetector(
                                 //   onTap: () {
                                 //     Navigator.push(
@@ -361,7 +376,8 @@ class _PlaylistState extends State<Playlist> {
                                   context: context,
                                   builder: (context) {
                                     return AlertDialog(
-                                      title: Center(child: Text("Create Playlist")),
+                                      title: Center(
+                                          child: Text("Create Playlist")),
                                       content: StatefulBuilder(
                                           builder: (context, setState) {
                                         return Column(
@@ -446,16 +462,17 @@ class _PlaylistState extends State<Playlist> {
                                             Center(
                                               child: InkWell(
                                                 onTap: () {
-                                                  var bloc = context.read<PlaylistProvider>();
+                                                  var bloc = context
+                                                      .read<PlaylistProvider>();
                                                   if (title.text.isEmpty) {
-                                                    showSnackBar(context, "Please! Enter Name");
-                                                  }else{
-                          pop(context);
-                                                  //  Navigator.pop(context);
-                          bloc.addPlaylist(context, title.text);
-                          
+                                                    showSnackBar(context,
+                                                        "Please! Enter Name");
+                                                  } else {
+                                                    pop(context);
+                                                    //  Navigator.pop(context);
+                                                    bloc.addPlaylist(
+                                                        context, title.text);
                                                   }
-                          
                                                 },
                                                 child: Container(
                                                   width: MediaQuery.of(context)
@@ -468,13 +485,15 @@ class _PlaylistState extends State<Playlist> {
                                                               .active)),
                                                   child: Padding(
                                                     padding:
-                                                        const EdgeInsets.all(12.0),
+                                                        const EdgeInsets.all(
+                                                            12.0),
                                                     child: Center(
                                                       child: Text(
                                                         "Create",
                                                         style: TextStyle(
-                                                            color: ColorConstants
-                                                                .active),
+                                                            color:
+                                                                ColorConstants
+                                                                    .active),
                                                       ),
                                                     ),
                                                   ),
@@ -515,8 +534,8 @@ class _PlaylistState extends State<Playlist> {
                       )
                     ],
                   ),
-              ),
-            );
+                ),
+              );
       }),
     );
   }
