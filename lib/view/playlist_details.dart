@@ -387,3 +387,11 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
         );
   }
 }
+
+
+
+// View 
+
+//   Model 
+
+// Controller  

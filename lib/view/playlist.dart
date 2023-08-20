@@ -180,22 +180,22 @@ class _PlaylistState extends State<Playlist> {
                               ),
                             ),
                             for (int i = 0;
-                                i < provider.playlist["data"].length;
+                                i < provider.playlist!.data.length;
                                 i++) ...[
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 4.0),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                 DetailsPlaylist(
-                                                  title: provider.playlist["data"][i]["name"],
-                                                  videos: provider.playlist["data"][i]
-                                                    ["videos"]
-                                                )));
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //              DetailsPlaylist(
+                                    //               title: provider.playlist["data"][i]["name"],
+                                    //               videos: provider.playlist["data"][i]
+                                    //                 ["videos"]
+                                    //             )));
                                   },
                                   child: Container(
                                     decoration: const BoxDecoration(
@@ -230,8 +230,7 @@ class _PlaylistState extends State<Playlist> {
                                             width: 200,
                                             child: Center(
                                               child: Text(
-                                                provider.playlist["data"][i]
-                                                    ["name"],
+                                             provider.playlist!.data[i].name,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.center,
@@ -246,8 +245,7 @@ class _PlaylistState extends State<Playlist> {
                                             width: 100,
                                             child: Center(
                                               child: Text(
-                                                "${provider.playlist["data"][i]
-                                                    ["videos"].length}",
+                                                "${provider.playlist!.data[i].videos.length}",
                                                 style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold,
@@ -279,9 +277,7 @@ class _PlaylistState extends State<Playlist> {
                                                                 context);
                                                             provider.deletePlaylist(
                                                                 context,
-                                                                provider.playlist[
-                                                                        "data"]
-                                                                    [i]["id"]);
+                                                                provider.playlist!.data[i].id);
                                                           },
                                                         );
                                                       },
@@ -362,6 +358,7 @@ class _PlaylistState extends State<Playlist> {
                                 //       )),
                                 // ),
                               ),
+                          
                             ],
                           ],
                         ),

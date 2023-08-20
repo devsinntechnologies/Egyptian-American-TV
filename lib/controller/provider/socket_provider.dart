@@ -22,22 +22,22 @@ class SocketProvider extends ChangeNotifier {
     socket.onConnect((_) {
       print('connect');
     });
-    socket.on('video_links', (data) {
-      if(data != null){
+    // socket.on('video_links', (data) {
+    //   if(data != null){
 
-      LinksModel urlData = LinksModel.fromJson(data);
-      if (urls == null ||
-          (urlData.currentVideoLink != urls!.currentVideoLink &&
-              urlData.nextVideoLink != urls!.nextVideoLink)) {
-      print(data);
-        urls = urlData;
-        playVideo(urls);
-        print(urls!.currentVideoLink);
-        notifyListeners();
-      }
-      }
-    });
-    socket.onDisconnect((_) => print('disconnect'));
+    //   LinksModel urlData = LinksModel.fromJson(data);
+    //   if (urls == null ||
+    //       (urlData.currentVideoLink != urls!.currentVideoLink &&
+    //           urlData.nextVideoLink != urls!.nextVideoLink)) {
+    //   print(data);
+    //     urls = urlData;
+    //     playVideo(urls);
+    //     print(urls!.currentVideoLink);
+    //     notifyListeners();
+    //   }
+    //   }
+    // });
+    // socket.onDisconnect((_) => print('disconnect'));
   }
 
   void playVideo(LinksModel? url) {

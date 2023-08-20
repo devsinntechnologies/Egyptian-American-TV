@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:egy_us_tv_admin/controller/service/endpoint.dart';
+import 'package:egy_us_tv_admin/model/get_playlist_model.dart';
 import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
@@ -31,10 +32,11 @@ class ApiManager {
       var response = await http.get(url);
 
       var res = jsonDecode(response.body);
+      
+      var dat = GetPlaylistModel.fromJson(res);
 
-      // showSnackBar(context, res["message"]);
-
-      return res;
+      print(dat);
+      return dat;
     } catch (e) {
       showSnackBar(context, e.toString());
     }

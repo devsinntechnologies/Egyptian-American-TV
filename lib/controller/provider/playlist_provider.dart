@@ -3,16 +3,19 @@ import 'dart:developer';
 import 'package:egy_us_tv_admin/controller/service/api_manager.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/get_playlist_model.dart';
+
 class PlaylistProvider extends ChangeNotifier {
   bool isLoading = false;
 
 
-  var playlist;
+  GetPlaylistModel? playlist;
 
   getPlaylist(context) async {
     isLoading = true;
     notifyListeners();
     playlist = await ApiManager.getPlaylist(context);
+    print(playlist);
     isLoading = false;
     notifyListeners();
   }

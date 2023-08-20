@@ -591,7 +591,7 @@ class _HomeState extends State<Home> {
                                 : Column(
                                     children: [
                                       for (int i = 0;
-                                          i < provider.playlist["data"].length;
+                                          i < provider.playlist!.data.length;
                                           i++)
                                         Padding(
                                           padding: const EdgeInsets.symmetric(
@@ -634,8 +634,7 @@ class _HomeState extends State<Home> {
                                                       ),
                                                     )),
                                                 title: Text(
-                                                  provider.playlist["data"][i]
-                                                      ["name"],
+                                                provider.playlist!.data[i].name ,
                                                   style: TextStyle(
                                                       color:
                                                           ColorConstants.black,
@@ -647,6 +646,7 @@ class _HomeState extends State<Home> {
                                                 ),
                                               )),
                                         ),
+                                 
                                     ],
                                   );
                           }),
