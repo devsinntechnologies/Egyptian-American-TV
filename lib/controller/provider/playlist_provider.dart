@@ -35,6 +35,7 @@ class PlaylistProvider extends ChangeNotifier {
     isLoading = true;
     // notifyListeners();
     await ApiManager.deletePlaylist(context, id);
+    getPlaylist(context);
     isLoading = false;
     // notifyListeners();
   }

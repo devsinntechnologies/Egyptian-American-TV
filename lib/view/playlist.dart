@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
@@ -275,8 +276,8 @@ class _PlaylistState extends State<Playlist> {
                                                               ColorConstants
                                                                   .black,
                                                           onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
+                                                            // Navigator.pop(
+                                                            //     context);
                                                             provider.deletePlaylist(
                                                                 context,
                                                                 provider.playlist[
@@ -468,7 +469,9 @@ class _PlaylistState extends State<Playlist> {
                                                     showSnackBar(context,
                                                         "Please! Enter Name");
                                                   } else {
-                                                    pop(context);
+                                                    print("Clicked");
+                                                    // debugger();
+                                                    // pop(context);
                                                     //  Navigator.pop(context);
                                                     bloc.addPlaylist(
                                                         context, title.text);
