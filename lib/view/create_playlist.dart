@@ -38,10 +38,10 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
               Navigator.pop(context);
             },
             child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: ColorConstants.black),
-              ),
+              // decoration: BoxDecoration(
+              //   borderRadius: BorderRadius.circular(8),
+              //   border: Border.all(color: ColorConstants.black),
+              // ),
               child: Center(
                 child: Padding(
                   padding: EdgeInsets.only(left: 4.0),

@@ -13,14 +13,16 @@ class SocketProvider extends ChangeNotifier {
 
   VideoPlayerController? nextController;
 
-  String socketUrl = "http://54.196.245.7";
+  String socketUrl = "http://3.80.91.77";
   String socketPort = "5000";
   String socketVideoPath = "/videos/";
 
   connection() {
     IO.Socket socket = IO.io(socketUrl + ":" + socketPort);
+    debugger();
     socket.onConnect((_) {
       print('connect');
+    debugger();
     });
     // socket.on('video_links', (data) {
     //   if(data != null){
@@ -37,7 +39,7 @@ class SocketProvider extends ChangeNotifier {
     //   }
     //   }
     // });
-    // socket.onDisconnect((_) => print('disconnect'));
+    socket.onDisconnect((_) => print('disconnect'));
   }
 
   void playVideo(LinksModel? url) {

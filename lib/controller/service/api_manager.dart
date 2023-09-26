@@ -6,7 +6,6 @@ import 'package:egy_us_tv_admin/model/get_playlist_model.dart';
 import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:nb_utils/nb_utils.dart';
 
 class ApiManager {
   static login(BuildContext context, {email, password}) async {

@@ -304,7 +304,6 @@ import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-import 'package:video_player_control_panel/video_player_control_panel.dart';
 
 import '../controller/provider/login_provider.dart';
 import '../socket/connection.dart';
@@ -478,12 +477,22 @@ class _HomeState extends State<Home> {
                                           height:
                                               MediaQuery.of(context).size.height *
                                                   .6,
-                                          child: JkVideoControlPanel(
-                                            socketProvider.controller!,
-                                            showClosedCaptionButton: false,
-                                            showFullscreenButton: false,
-                                            showVolumeButton: false,
-                                          )),
+                                          child:
+                                           Stack(
+                alignment: Alignment.bottomCenter,
+                children: <Widget>[
+                  VideoPlayer(socketProvider.controller!),
+                  // _ControlsOverlay(controller: socketProvider.controller),
+                  VideoProgressIndicator(socketProvider.controller!, allowScrubbing: true),
+                ],
+              ),
+                                          //  JkVideoControlPanel(
+                                          //   socketProvider.controller!,
+                                          //   showClosedCaptionButton: false,
+                                          //   showFullscreenButton: false,
+                                          //   showVolumeButton: false,
+                                          // )
+                                          ),
                                   Container(
                                     height: 200,
                                     child: ScrollConfiguration(

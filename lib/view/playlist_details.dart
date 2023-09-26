@@ -5,8 +5,6 @@ import 'dart:io';
 import 'package:egy_us_tv_admin/model/video_model.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nb_utils/nb_utils.dart';
-import 'package:video_player_control_panel/video_player_control_panel.dart';
 
 import '../config/color.dart';
 import '../widgets/alert.dart';

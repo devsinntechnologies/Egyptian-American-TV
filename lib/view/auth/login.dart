@@ -1,10 +1,10 @@
 import 'package:egy_us_tv_admin/controller/provider/login_provider.dart';
+import 'package:egy_us_tv_admin/controller/provider/socket_provider.dart';
 import 'package:egy_us_tv_admin/controller/service/api_manager.dart';
 import 'package:egy_us_tv_admin/view/bottombar.dart';
 import 'package:egy_us_tv_admin/view/home.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/color.dart';
@@ -25,6 +25,10 @@ class _EmailLoginState extends State<EmailLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(    
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        var provider = context.read<SocketProvider>();
+        provider.connection();
+      }),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Builder(
