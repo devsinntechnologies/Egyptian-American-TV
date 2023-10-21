@@ -1,13 +1,15 @@
 import 'dart:io';
 
 import 'package:egy_us_tv_admin/config/color.dart';
+import 'package:egy_us_tv_admin/controller/service/api_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
 class SelectedVideo extends StatefulWidget {
   File? path;
-  SelectedVideo({this.path});
+  final playlistID,order;
+  SelectedVideo({this.path,this.order,this.playlistID});
 
   @override
   _SelectedVideoState createState() => _SelectedVideoState();
@@ -28,7 +30,7 @@ class _SelectedVideoState extends State<SelectedVideo> {
         });
       });
     controller!.play();
-    // controller!.setLooping(true);
+    controller!.setLooping(true);
   }
 
   @override
@@ -60,23 +62,34 @@ class _SelectedVideoState extends State<SelectedVideo> {
     return Scaffold(
       backgroundColor: ColorConstants.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: ColorConstants.active,
         elevation: 0,
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
         actions: [
           Padding(
             padding: const EdgeInsets.all(10.0),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(color: ColorConstants.active)),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Send",
-                  style: TextStyle(
-                      color: ColorConstants.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold),
+            child: InkWell(
+              onTap: (){
+
+                ApiManager.uploadVideo(context, widget.path!.path, widget.playlistID, widget.order);
+                 
+              },
+              child: Container(
+               decoration: BoxDecoration(
+                                  color: ColorConstants.primaryColor,
+                                  borderRadius: BorderRadius.all(Radius.circular(5)),
+                                  border:
+                                      Border.all(color: ColorConstants.primaryColor)),
+                              
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Send",
+                    style: TextStyle(
+                        color: ColorConstants.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),

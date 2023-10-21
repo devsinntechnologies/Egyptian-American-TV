@@ -138,14 +138,18 @@ class _CreatePlaylistState extends State<CreatePlaylist> {
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * .4,
-                  decoration: BoxDecoration(
-                      border: Border.all(color: ColorConstants.active)),
+                 decoration: BoxDecoration(
+                                color: ColorConstants.primaryColor,
+                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                border:
+                                    Border.all(color: ColorConstants.primaryColor)),
+                            
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Center(
                       child: Text(
                         "Create",
-                        style: TextStyle(color: ColorConstants.active),
+                        style: TextStyle(color: ColorConstants.white),
                       ),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:egy_us_tv_admin/controller/service/api_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../../model/get_playlist_model.dart';
 
@@ -25,9 +26,11 @@ class PlaylistProvider extends ChangeNotifier {
   addPlaylist(context,name)async{
     isLoading = true;
     notifyListeners();
+    // debugger();
     // playlist = null;
     await ApiManager.addPlaylist(context, name);
     playlist = await ApiManager.getPlaylist(context);
+    // pop(context);
     isLoading = false;
     notifyListeners();
   }

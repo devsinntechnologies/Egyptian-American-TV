@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
@@ -187,15 +188,16 @@ class _PlaylistState extends State<Playlist> {
                                     const EdgeInsets.symmetric(vertical: 4.0),
                                 child: InkWell(
                                   onTap: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //              DetailsPlaylist(
-                                    //               title: provider.playlist["data"][i]["name"],
-                                    //               videos: provider.playlist["data"][i]
-                                    //                 ["videos"]
-                                    //             )));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                 DetailsPlaylist(
+                                                  title: provider.playlist!.data[i].name,
+                                                  playlistID: provider.playlist!.data[i].id,
+                                                  videos: provider.playlist!.data[i].
+                                                    videos
+                                                )));
                                   },
                                   child: Container(
                                     decoration: const BoxDecoration(
@@ -376,7 +378,7 @@ class _PlaylistState extends State<Playlist> {
                                       title: Center(
                                           child: Text("Create Playlist")),
                                       content: StatefulBuilder(
-                                          builder: (context, setState) {
+                                          builder: (BuildContext _context, setState) {
                                         return Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -459,16 +461,17 @@ class _PlaylistState extends State<Playlist> {
                                             Center(
                                               child: InkWell(
                                                 onTap: () {
-                                                  var bloc = context
+                                                  // debugger();
+                                                  var bloc = _context
                                                       .read<PlaylistProvider>();
                                                   if (title.text.isEmpty) {
-                                                    showSnackBar(context,
+                                                    showSnackBar(_context,
                                                         "Please! Enter Name");
                                                   } else {
-                                                    pop(context);
+                                                    // pop(_context);
                                                     //  Navigator.pop(context);
                                                     bloc.addPlaylist(
-                                                        context, title.text);
+                                                        _context, title.text);
                                                   }
                                                 },
                                                 child: Container(
@@ -477,9 +480,11 @@ class _PlaylistState extends State<Playlist> {
                                                           .width *
                                                       .2,
                                                   decoration: BoxDecoration(
-                                                      border: Border.all(
-                                                          color: ColorConstants
-                                                              .active)),
+                                color: ColorConstants.primaryColor,
+                                borderRadius: BorderRadius.all(Radius.circular(5)),
+                                border:
+                                    Border.all(color: ColorConstants.primaryColor)),
+                            
                                                   child: Padding(
                                                     padding:
                                                         const EdgeInsets.all(
@@ -490,7 +495,7 @@ class _PlaylistState extends State<Playlist> {
                                                         style: TextStyle(
                                                             color:
                                                                 ColorConstants
-                                                                    .active),
+                                                                    .white),
                                                       ),
                                                     ),
                                                   ),

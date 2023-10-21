@@ -2,18 +2,23 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:egy_us_tv_admin/controller/service/api_manager.dart';
 import 'package:egy_us_tv_admin/model/video_model.dart';
+import 'package:egy_us_tv_admin/utils/utils.dart';
+import 'package:egy_us_tv_admin/view/webview_upload_video.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../config/color.dart';
+import '../model/get_playlist_model.dart';
 import '../widgets/alert.dart';
 import 'selected_video.dart';
 
 class DetailsPlaylist extends StatefulWidget {
   final String? title;
-  final videos;
-  const DetailsPlaylist({super.key, this.title, this.videos});
+  final playlistID;
+  final List<Video>? videos;
+  const DetailsPlaylist({super.key, this.title, this.videos,this.playlistID});
 
   @override
   State<DetailsPlaylist> createState() => _DetailsPlaylistState();
@@ -30,7 +35,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => SelectedVideo(path: videopath)));
+              builder: (context) => SelectedVideo(path: videopath,playlistID: widget.playlistID,order: "2",)));
       setState(() {});
     }
   }
@@ -42,6 +47,8 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVizbW8JO1a8kEwNDGUo4MzMabdA3LQONy7bRkdNvohgdcgg1saqK_KQF0ShEcqyw5Rto&usqp=CAU",
     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScETz1S6DFb1HWOt4XQZYjyc8xxIFQKmWMJWLCXaZPq0rNx3c7tvFIU16lAB7wJ3OxLEo&usqp=CAU",
   ];
+
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +88,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                 color: ColorConstants.black, fontWeight: FontWeight.w500),
           ),
         ),
-        body: Stack(
+        body:  isLoading ?  Center(child: CircularProgressIndicator(backgroundColor: ColorConstants.active,) ) :  Stack(
           children: [
             Container(
               child: Column(
@@ -121,7 +128,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                               SizedBox(
                                 width: 10,
                               ),
-                              Text("${widget.videos.length} Videos")
+                              Text("${widget.videos!.length} Videos")
                             ],
                           ),
                         ],
@@ -134,7 +141,7 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                         shrinkWrap: true,
                         itemCount: widget.videos!.length,
                         itemBuilder: (context, index) {
-                          VideoModel videoModel = VideoModel.fromJson(widget.videos[index]);
+                          VideoModel videoModel = VideoModel.fromJson(widget.videos![index].toJson());
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -150,12 +157,12 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                                       Container(
                                         height: 110,
                                         width: 100,
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image:
-                                                  NetworkImage(images[index]),
-                                              fit: BoxFit.cover),
-                                        ),
+                                        // decoration: BoxDecoration(
+                                        //   image: DecorationImage(
+                                        //       image:
+                                        //           NetworkImage(images[index]),
+                                        //       fit: BoxFit.cover),
+                                        // ),
 
                                         // child: JkVideoControlPanel(
                                         //     socketProvider.controller!,
@@ -197,29 +204,40 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                                     padding: const EdgeInsets.only(right: 15.0),
                                     child: Row(
                                       children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.red,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Row(
-                                              children: const [
-                                                Text(
-                                                  "Delete",
-                                                  style: TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                // Icon(
-                                                //   Icons.delete,
-                                                //   color: Colors.white,
-                                                //   size: 20,
-                                                // )
-                                              ],
+                                        InkWell(
+                                          onTap: ()async{
+                                            setState(() {
+                                              isLoading= true;
+                                            });
+                                            await ApiManager.deletePlaylistVideo(context, widget.videos![index].id, widget.playlistID);
+setState(() {
+                                              isLoading= false;
+                                            });
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.red,
+                                                borderRadius:
+                                                    BorderRadius.circular(8)),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Row(
+                                                children: const [
+                                                  Text(
+                                                    "Delete",
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 5,
+                                                  ),
+                                                  // Icon(
+                                                  //   Icons.delete,
+                                                  //   color: Colors.white,
+                                                  //   size: 20,
+                                                  // )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -267,7 +285,8 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                 alignment: Alignment.bottomRight,
                 child: InkWell(
                   onTap: () {
-                    getvideo(context);
+                    push(context, WebviewUploadVideo(playListID: widget.playlistID,order: "2"));
+                    // getvideo(context);
                   },
                   child: Container(
                     decoration: BoxDecoration(

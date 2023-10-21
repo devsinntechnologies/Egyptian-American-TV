@@ -20,13 +20,13 @@ class _SplashPageState extends State<SplashPage> {
   }
 
   void navigationPage() async {
-    // var token = await Preference.getToken();
-    // if (token != null) {
-    //   pushUntil(context, Home());
-    // } else {
-    //   pushUntil(context, EmailLogin());
-    // }
+    var token = await Preference.getToken();
+    if (token != null) {
+      pushUntil(context, Home());
+    } else {
       pushUntil(context, EmailLogin());
+    }
+      // pushUntil(context, EmailLogin());
 
   }
 

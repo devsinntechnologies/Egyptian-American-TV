@@ -329,7 +329,7 @@ class _HomeState extends State<Home> {
   void initState() {
     var provider = context.read<PlaylistProvider>();
     var socketProvider = context.read<SocketProvider>();
-       socketProvider.connection();
+      //  socketProvider.connection();
        
     provider.getPlaylist(context);
     // playPrevVideo("http://50.16.82.20/videos/video3.mp4");
@@ -481,9 +481,16 @@ class _HomeState extends State<Home> {
                                            Stack(
                 alignment: Alignment.bottomCenter,
                 children: <Widget>[
-                  VideoPlayer(socketProvider.controller!),
+socketProvider.urls == null
+              ? Center(
+                  child: CircularProgressIndicator.adaptive(),
+                )
+              : Container(
+                height: 400,
+                child: VideoPlayer(socketProvider.controller!))
+                  // VideoPlayer(socketProvider.controller!),
                   // _ControlsOverlay(controller: socketProvider.controller),
-                  VideoProgressIndicator(socketProvider.controller!, allowScrubbing: true),
+                  // VideoProgressIndicator(socketProvider.controller!, allowScrubbing: true),
                 ],
               ),
                                           //  JkVideoControlPanel(
