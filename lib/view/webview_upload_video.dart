@@ -1,6 +1,8 @@
 import 'package:egy_us_tv_admin/config/color.dart';
+import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:webview_windows/webview_windows.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -51,6 +53,11 @@ class _WebviewUploadVideoState extends State<WebviewUploadVideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(onPressed: (){
+          var blox = context.read<PlaylistProvider>();
+          blox.getPlaylist(context);
+          Navigator.pop(context);
+        }, icon: Icon(Icons.arrow_back)),
         backgroundColor: ColorConstants.active,
         title: Text("Upload Video"),
       ),
@@ -93,6 +100,7 @@ class _WebviewUploadVideoState extends State<WebviewUploadVideo> {
 
       await _controller.setBackgroundColor(Colors.transparent);
       await _controller.setPopupWindowPolicy(WebviewPopupWindowPolicy.deny);
+      // await _controller.loadUrl('http://arhamsarwar786.github.io/egy-video-webview?id=${widget.playListID}&order=${widget.order}');
       await _controller.loadUrl('http://localhost:5173?id=${widget.playListID}&order=${widget.order}');
 
       if (!mounted) return;

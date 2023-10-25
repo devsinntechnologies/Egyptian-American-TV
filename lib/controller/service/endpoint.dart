@@ -2,9 +2,12 @@
 
 const BASE_URL = "http://3.80.91.77:3000/api/";
 const base = "3.80.91.77:3000";
+const onlyBase = "http://3.80.91.77";
+const socketPort = "5000";
 const loginEndPoint = "auth/login";
 
 const getPlaylistEndpoint = "playlist/getAllPlaylist";
+const runPlaylistEndpoint = "runPlaylist/";
 
 const addPlaylistEndpoint = "playlist/addNewPlaylist";
 

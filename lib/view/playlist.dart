@@ -7,7 +7,6 @@ import 'package:egy_us_tv_admin/view/create_playlist.dart';
 import 'package:egy_us_tv_admin/view/playlist_details.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../config/color.dart';
@@ -86,6 +85,161 @@ class _PlaylistState extends State<Playlist> {
           style: TextStyle(
               color: ColorConstants.black, fontWeight: FontWeight.w500),
         ),
+        actions: [
+          InkWell(
+            onTap: () {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Center(child: Text("Create Playlist")),
+                      content: StatefulBuilder(
+                          builder: (BuildContext _context, setState) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            // Center(
+                            //   child: InkWell(
+                            //     onTap: () async {
+                            //       await _getFromGallery();
+                            //     },
+                            //     child: Stack(
+                            //       // fit: StackFit.passthrough,
+                            //       clipBehavior: Clip.none,
+                            //       children: [
+                            //         imagePath == null
+                            //             ? Container(
+                            //                 height: 150,
+                            //                 width: 150,
+                            //                 decoration: BoxDecoration(
+                            //                     shape:
+                            //                         BoxShape.circle,
+                            //                     border: Border.all(
+                            //                         color: Colors
+                            //                             .black45)),
+                            //                 child: Column(
+                            //                   crossAxisAlignment:
+                            //                       CrossAxisAlignment
+                            //                           .center,
+                            //                   mainAxisAlignment:
+                            //                       MainAxisAlignment
+                            //                           .center,
+                            //                   children: const [
+                            //                     Icon(
+                            //                       Icons.image,
+                            //                       size: 50,
+                            //                       color: Colors
+                            //                           .black54,
+                            //                     ),
+                            //                     SizedBox(
+                            //                       height: 5,
+                            //                     ),
+                            //                     Text(
+                            //                       "Select thumbnail",
+                            //                       style: TextStyle(
+                            //                           color: Colors
+                            //                               .black54,
+                            //                           fontSize: 13),
+                            //                     )
+                            //                   ],
+                            //                 ),
+                            //               )
+                            //             : CircleAvatar(
+                            //                 radius: 75,
+                            //                 backgroundColor: Colors
+                            //                     .green.shade50,
+                            //                 backgroundImage:
+                            //                     FileImage(
+                            //                         imagePath!),
+                            //               ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // ),
+                            // const SizedBox(
+                            //   height: 20,
+                            // ),
+                            Text("Playlist title"),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            CustomFormField(
+                                color: Colors.white,
+                                hintText: "",
+                                icon: Icons.edit,
+                                border: 10,
+                                controller: title),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Center(
+                              child: InkWell(
+                                onTap: () {
+                                  // debugger();
+                                  var bloc = _context.read<PlaylistProvider>();
+                                  if (title.text.isEmpty) {
+                                    showSnackBar(
+                                        _context, "Please! Enter Name");
+                                  } else {
+                                    // pop(_context);
+                                    //  Navigator.pop(context);
+                                    bloc.addPlaylist(_context, title.text);
+                                  }
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width * .2,
+                                  decoration: BoxDecoration(
+                                      color: ColorConstants.primaryColor,
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)),
+                                      border: Border.all(
+                                          color: ColorConstants.primaryColor)),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Center(
+                                      child: Text(
+                                        "Create",
+                                        style: TextStyle(
+                                            color: ColorConstants.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }),
+                    );
+                  });
+            },
+            child: Container(
+              margin: EdgeInsets.only(top: 10, right: 10),
+              decoration: BoxDecoration(
+                  color: ColorConstants.active,
+                  borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: const [
+                    Icon(
+                      Icons.add,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Create Playlist",
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       body: Builder(builder: (context) {
         var provider = context.watch<PlaylistProvider>();
@@ -119,7 +273,7 @@ class _PlaylistState extends State<Playlist> {
                                       width: 100,
                                       child: const Center(
                                         child: Text(
-                                          "Image",
+                                          "Order",
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.bold,
@@ -188,20 +342,33 @@ class _PlaylistState extends State<Playlist> {
                                     const EdgeInsets.symmetric(vertical: 4.0),
                                 child: InkWell(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                 DetailsPlaylist(
-                                                  title: provider.playlist!.data[i].name,
-                                                  playlistID: provider.playlist!.data[i].id,
-                                                  videos: provider.playlist!.data[i].
-                                                    videos
-                                                )));
+                                    push(
+                                      context,
+                                      DetailsPlaylist(
+                                          title:
+                                              provider.playlist!.data[i].name,
+                                          playlistID:
+                                              provider.playlist!.data[i].id,
+                                          videos: provider
+                                              .playlist!.data[i].videos),
+                                    );
+//                         Navigator.push(
+//                                         context,
+                                    // MaterialPageRoute(
+                                    //     builder: (context) =>
+                                    //          DetailsPlaylist(
+                                    //           title: provider.playlist!.data[i].name,
+                                    //           playlistID: provider.playlist!.data[i].id,
+                                    //           videos: provider.playlist!.data[i].
+                                    //             videos
+                                    //         ),),);
                                   },
                                   child: Container(
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
+                                    decoration: BoxDecoration(
+                                        color: (provider
+                                                .playlist!.data[i].isRunning)
+                                            ? Colors.green[100]
+                                            : Colors.white,
                                         border: Border(
                                             bottom: BorderSide(
                                                 color: Colors.black26))),
@@ -215,24 +382,30 @@ class _PlaylistState extends State<Playlist> {
                                             width: 100,
                                             child: Center(
                                               child: Container(
-                                                  height: 40,
+                                                child: Text("${i+1}",
+                                                
+                                                  style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),)              ,                                    height: 40,
                                                   width: 40,
                                                   decoration: BoxDecoration(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               12),
-                                                      image: const DecorationImage(
-                                                          image: NetworkImage(
-                                                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
-                                                          fit: BoxFit
-                                                              .fitHeight))),
+                                                      // image: const DecorationImage(
+                                                      //     image: NetworkImage(
+                                                      //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
+                                                      //     fit: BoxFit
+                                                      //         .fitHeight)
+                                                              )),
                                             ),
                                           ),
                                           Container(
                                             width: 200,
                                             child: Center(
                                               child: Text(
-                                             provider.playlist!.data[i].name,
+                                                provider.playlist!.data[i].name,
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 textAlign: TextAlign.center,
@@ -275,11 +448,15 @@ class _PlaylistState extends State<Playlist> {
                                                               ColorConstants
                                                                   .black,
                                                           onPressed: () {
-                                                            Navigator.pop(
-                                                                context);
-                                                            provider.deletePlaylist(
-                                                                context,
-                                                                provider.playlist!.data[i].id);
+                                                            // Navigator.pop(
+                                                            //     context);
+                                                            provider
+                                                                .deletePlaylist(
+                                                                    context,
+                                                                    provider
+                                                                        .playlist!
+                                                                        .data[i]
+                                                                        .id);
                                                           },
                                                         );
                                                       },
@@ -293,13 +470,37 @@ class _PlaylistState extends State<Playlist> {
                                               )),
                                           Container(
                                               width: 100,
-                                              child: Center(
-                                                child: Icon(
-                                                  Icons.play_arrow,
-                                                  color:
-                                                      ColorConstants.lightGreen,
-                                                ),
-                                              )),
+                                              child: provider.playlist!.data[i]
+                                                      .videos.isEmpty
+                                                  ? const SizedBox()
+                                                  : Center(
+                                                      child: InkWell(
+                                                        onTap: () async {
+                                                          var provider =
+                                                              context.read<
+                                                                  PlaylistProvider>();
+                                                          var message =
+                                                              await provider
+                                                                  .runPlaylist(
+                                                                      context,
+                                                                      provider
+                                                                          .playlist!
+                                                                          .data[
+                                                                              i]
+                                                                          .id);
+                                                          if (message != null) {
+                                                            showSnackBar(
+                                                                context,
+                                                                message);
+                                                          }
+                                                        },
+                                                        child: Icon(
+                                                          Icons.play_arrow,
+                                                          color: ColorConstants
+                                                              .lightGreen,
+                                                        ),
+                                                      ),
+                                                    )),
                                         ],
                                       ),
                                     ),
@@ -360,180 +561,10 @@ class _PlaylistState extends State<Playlist> {
                                 //       )),
                                 // ),
                               ),
-                          
                             ],
                           ],
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 20.0, right: 20),
-                        child: Align(
-                          alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Center(
-                                          child: Text("Create Playlist")),
-                                      content: StatefulBuilder(
-                                          builder: (BuildContext _context, setState) {
-                                        return Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            // Center(
-                                            //   child: InkWell(
-                                            //     onTap: () async {
-                                            //       await _getFromGallery();
-                                            //     },
-                                            //     child: Stack(
-                                            //       // fit: StackFit.passthrough,
-                                            //       clipBehavior: Clip.none,
-                                            //       children: [
-                                            //         imagePath == null
-                                            //             ? Container(
-                                            //                 height: 150,
-                                            //                 width: 150,
-                                            //                 decoration: BoxDecoration(
-                                            //                     shape:
-                                            //                         BoxShape.circle,
-                                            //                     border: Border.all(
-                                            //                         color: Colors
-                                            //                             .black45)),
-                                            //                 child: Column(
-                                            //                   crossAxisAlignment:
-                                            //                       CrossAxisAlignment
-                                            //                           .center,
-                                            //                   mainAxisAlignment:
-                                            //                       MainAxisAlignment
-                                            //                           .center,
-                                            //                   children: const [
-                                            //                     Icon(
-                                            //                       Icons.image,
-                                            //                       size: 50,
-                                            //                       color: Colors
-                                            //                           .black54,
-                                            //                     ),
-                                            //                     SizedBox(
-                                            //                       height: 5,
-                                            //                     ),
-                                            //                     Text(
-                                            //                       "Select thumbnail",
-                                            //                       style: TextStyle(
-                                            //                           color: Colors
-                                            //                               .black54,
-                                            //                           fontSize: 13),
-                                            //                     )
-                                            //                   ],
-                                            //                 ),
-                                            //               )
-                                            //             : CircleAvatar(
-                                            //                 radius: 75,
-                                            //                 backgroundColor: Colors
-                                            //                     .green.shade50,
-                                            //                 backgroundImage:
-                                            //                     FileImage(
-                                            //                         imagePath!),
-                                            //               ),
-                                            //       ],
-                                            //     ),
-                                            //   ),
-                                            // ),
-                                            // const SizedBox(
-                                            //   height: 20,
-                                            // ),
-                                            Text("Playlist title"),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            CustomFormField(
-                                                color: Colors.white,
-                                                hintText: "",
-                                                icon: Icons.edit,
-                                                border: 10,
-                                                controller: title),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Center(
-                                              child: InkWell(
-                                                onTap: () {
-                                                  // debugger();
-                                                  var bloc = _context
-                                                      .read<PlaylistProvider>();
-                                                  if (title.text.isEmpty) {
-                                                    showSnackBar(_context,
-                                                        "Please! Enter Name");
-                                                  } else {
-                                                    // pop(_context);
-                                                    //  Navigator.pop(context);
-                                                    bloc.addPlaylist(
-                                                        _context, title.text);
-                                                  }
-                                                },
-                                                child: Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      .2,
-                                                  decoration: BoxDecoration(
-                                color: ColorConstants.primaryColor,
-                                borderRadius: BorderRadius.all(Radius.circular(5)),
-                                border:
-                                    Border.all(color: ColorConstants.primaryColor)),
-                            
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            12.0),
-                                                    child: Center(
-                                                      child: Text(
-                                                        "Create",
-                                                        style: TextStyle(
-                                                            color:
-                                                                ColorConstants
-                                                                    .white),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        );
-                                      }),
-                                    );
-                                  });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.green,
-                                  borderRadius: BorderRadius.circular(12)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: const [
-                                    Icon(
-                                      Icons.add,
-                                      color: Colors.black,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      "Create Playlist",
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),

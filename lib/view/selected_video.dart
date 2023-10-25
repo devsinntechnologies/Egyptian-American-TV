@@ -65,36 +65,36 @@ class _SelectedVideoState extends State<SelectedVideo> {
         backgroundColor: ColorConstants.active,
         elevation: 0,
         // automaticallyImplyLeading: false,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: InkWell(
-              onTap: (){
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.all(10.0),
+        //     child: InkWell(
+        //       onTap: (){
 
-                ApiManager.uploadVideo(context, widget.path!.path, widget.playlistID, widget.order);
+        //         ApiManager.uploadVideo(context, widget.path!.path, widget.playlistID, widget.order);
                  
-              },
-              child: Container(
-               decoration: BoxDecoration(
-                                  color: ColorConstants.primaryColor,
-                                  borderRadius: BorderRadius.all(Radius.circular(5)),
-                                  border:
-                                      Border.all(color: ColorConstants.primaryColor)),
+        //       },
+        //       child: Container(
+        //        decoration: BoxDecoration(
+        //                           color: ColorConstants.primaryColor,
+        //                           borderRadius: BorderRadius.all(Radius.circular(5)),
+        //                           border:
+        //                               Border.all(color: ColorConstants.primaryColor)),
                               
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    "Send",
-                    style: TextStyle(
-                        color: ColorConstants.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
+        //         child: Padding(
+        //           padding: const EdgeInsets.all(8.0),
+        //           child: Text(
+        //             "Send",
+        //             style: TextStyle(
+        //                 color: ColorConstants.white,
+        //                 fontSize: 16,
+        //                 fontWeight: FontWeight.bold),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Stack(
         children: [

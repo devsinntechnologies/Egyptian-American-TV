@@ -5,15 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 
-class SelectedVideo extends StatefulWidget {
+import '../controller/provider/socket_provider.dart';
+
+class VideoPreviewer extends StatefulWidget {
   String? path;
-  SelectedVideo({this.path});
+  VideoPreviewer({this.path});
 
   @override
-  _SelectedVideoState createState() => _SelectedVideoState();
+  _VideoPreviewerState createState() => _VideoPreviewerState();
 }
 
-class _SelectedVideoState extends State<SelectedVideo> {
+class _VideoPreviewerState extends State<VideoPreviewer> {
   VideoPlayerController? controller;
   bool _isFullScreen = false;
   bool _isVideoInitializing = true; // New flag to track video initialization
@@ -21,7 +23,8 @@ class _SelectedVideoState extends State<SelectedVideo> {
   @override
   void initState() {
     super.initState();
-    controller = VideoPlayerController.networkUrl(Uri.parse(widget.path!))
+    print(socketUrl + socketVideoPath + widget.path!);
+    controller = VideoPlayerController.networkUrl(Uri.parse(socketUrl + socketVideoPath + widget.path!))
       ..initialize().then((_) {
         setState(() {
           _isVideoInitializing = false; // Video is initialized

@@ -1,295 +1,3 @@
-// import 'dart:io';
-
-// import 'package:dio/dio.dart';
-// import 'package:egy_us_tv_admin/config/color.dart';
-// import 'package:egy_us_tv_admin/view/bottombar.dart';
-// import 'package:egy_us_tv_admin/view/playlist.dart';
-// import 'package:egy_us_tv_admin/view/playlist_details.dart';
-// import 'package:egy_us_tv_admin/widgets/animation.dart';
-// import 'package:flutter/material.dart';
-// import 'package:image_picker/image_picker.dart';
-// import 'package:nb_utils/nb_utils.dart';
-// import 'package:mime_type/mime_type.dart';
-// import '../widgets/alert.dart';
-// import 'package:http_parser/http_parser.dart';
-
-// class Home extends StatefulWidget {
-//   const Home({super.key});
-
-//   @override
-//   State<Home> createState() => _HomeState();
-// }
-
-// class _HomeState extends State<Home> {
-//   // File? videopath;
-//   // getvideo(context) async {
-//   //   final ImagePicker picker = ImagePicker();
-//   //   final XFile? image = await picker.pickVideo(source: ImageSource.gallery);
-//   //   if (image != null) {
-//   //     videopath = File(image.path);
-
-//   //     setState(() {
-//   //       _fetchData(context: context, video: videopath);
-//   //     });
-//   //   }
-//   // }
-
-//   // Future<dynamic> create_post({
-//   //   video,
-//   // }) async {
-//   //   try {
-//   //     FormData? form;
-//   //     Map<String, dynamic> dataArray = {
-//   //       "server_key": "1ef40e266357a3ac7b1bc05368bac9f8",
-//   //       "postText": "checkkkkkkkkkkkkkkkkkkkkkk",
-//   //     };
-//   //     if (video != null) {
-//   //       log("iffffffffffffffffffffffffffffffffff");
-//   //       String? mimeType = mime(video.path);
-//   //       String mimee = mimeType!.split('/')[0];
-//   //       String type = mimeType.split('/')[1];
-//   //       dataArray['postVideo'] = await MultipartFile.fromFile(
-//   //         video.path,
-//   //         filename: video.path.split('/').last,
-//   //         contentType: MediaType(mimee, type),
-//   //       );
-//   //     }
-//   //     form = FormData.fromMap(dataArray);
-//   //     Response response = await Dio().post(
-//   //         'https://raabtasocial.com/api/new_post',
-//   //         data: form,
-//   //         queryParameters: {
-//   //           'access_token':
-//   //               "833a39a26b2679278f0d4d8eabe794b8c36fab6d71c230cf39596706aa80f870c3a396289035184393ac0c50dd620dc7b88e5fe05c70e15b"
-//   //         });
-//   //     return response.data;
-//   //   } on DioError catch (e) {
-//   //     log("dio errorrrrrr $e");
-//   //     return e.response?.data;
-//   //   }
-//   // }
-
-//   // void _fetchData({context, video}) async {
-//   //   dynamic res = await create_post(
-//   //     video: video,
-//   //   );
-//   //   if (res['api_status'] == 200) {
-//   //     var decodedData = res;
-//   //     var productsData = decodedData["post_data"];
-//   //     log(" 20000000000000000000");
-//   //   } else {
-//   //     log("erorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
-//   //     toast('Error: ${res['errors']['error_text']}');
-//   //   }
-//   // }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         backgroundColor: Colors.white,
-//         appBar: AppBar(
-//           automaticallyImplyLeading: false,
-//           backgroundColor: Colors.white,
-//           centerTitle: true,
-//           elevation: 0,
-//           leading: Padding(
-//             padding: const EdgeInsets.all(12.0),
-//             child: Container(
-//               height: 15,
-//               width: 15,
-//               decoration: const BoxDecoration(
-//                   image: DecorationImage(
-//                       image: AssetImage("assets/main_logo.png"),
-//                       fit: BoxFit.contain)),
-//             ),
-//           ),
-//           title: Text(
-//             "Dashboard",
-//             style: TextStyle(
-//                 color: ColorConstants.black, fontWeight: FontWeight.w500),
-//           ),
-//         ),
-//         body: SafeArea(
-//             child: SingleChildScrollView(
-//           child: ElevatedButton(
-//               onPressed: () {
-
-//               },
-//               child: Text("Upload")),
-//           // child: Padding(
-//           //   padding: const EdgeInsets.all(12.0),
-//           //   child: Column(
-//           //     children: [
-//           //       Row(
-//           //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           //         children: [
-//           //           Column(
-//           //             crossAxisAlignment: CrossAxisAlignment.start,
-//           //             children: [
-//           //               Text(
-//           //                 "WELCOME ADMIN!",
-//           //                 style: TextStyle(
-//           //                     fontSize: 15,
-//           //                     fontWeight: FontWeight.w600,
-//           //                     color: ColorConstants.black),
-//           //               ),
-//           //               const SizedBox(
-//           //                 height: 5,
-//           //               ),
-//           //               Text(
-//           //                 "Good Morning",
-//           //                 style: TextStyle(
-//           //                     fontSize: 14, color: ColorConstants.active),
-//           //               ),
-//           //             ],
-//           //           ),
-//           //           InkWell(
-//           //             onTap: () {
-//           //               showDialog(
-//           //                 context: context,
-//           //                 builder: (context) {
-//           //                   return Alert(
-//           //                     text1:
-//           //                         'Are you sure you want to stop Tv Stream and  go Live?',
-//           //                     textbutton1: 'Live',
-//           //                     buttoncolor: ColorConstants.red,
-//           //                     buttoncolor2: ColorConstants.black,
-//           //                     onPressed: () {
-//           //                       // logout(context: context).then((value) {
-//           //                       //   selectedItemPosition = 0;
-
-//           //                       //   removeKey("token");
-//           //                       //   Navigator.of(context).pushNamedAndRemoveUntil(
-//           //                       //       AppRoutes.login,
-//           //                       //       (Route<dynamic> route) => false);
-//           //                       // });
-//           //                     },
-//           //                   );
-//           //                 },
-//           //               );
-//           //             },
-//           //             child: Container(
-//           //               decoration: BoxDecoration(
-//           //                   border: Border.all(color: ColorConstants.red),
-//           //                   borderRadius: BorderRadius.circular(12)),
-//           //               child: Padding(
-//           //                 padding: const EdgeInsets.all(8.0),
-//           //                 child: Text(
-//           //                   "Live",
-//           //                   style: TextStyle(
-//           //                       color: ColorConstants.red,
-//           //                       fontSize: 14,
-//           //                       fontWeight: FontWeight.w500),
-//           //                 ),
-//           //               ),
-//           //             ),
-//           //           ),
-//           //         ],
-//           //       ),
-//           //       const SizedBox(
-//           //         height: 25,
-//           //       ),
-//           //       Container(
-//           //         child: Center(
-//           //             child: Column(
-//           //           crossAxisAlignment: CrossAxisAlignment.center,
-//           //           mainAxisAlignment: MainAxisAlignment.center,
-//           //           children: [
-//           //             novideo(),
-//           //             Text(
-//           //               "Please Select Playlist",
-//           //               style: TextStyle(
-//           //                   fontSize: 15,
-//           //                   fontWeight: FontWeight.w600,
-//           //                   color: ColorConstants.black),
-//           //             ),
-//           //           ],
-//           //         )),
-//           //       ),
-//           //       SizedBox(
-//           //         height: 25,
-//           //       ),
-//           //       Row(
-//           //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//           //         children: [
-//           //           Text(
-//           //             "Latest Playlist",
-//           //             style: TextStyle(
-//           //                 fontSize: 15,
-//           //                 fontWeight: FontWeight.w600,
-//           //                 color: ColorConstants.black),
-//           //           ),
-//           //           InkWell(
-//           //             onTap: () {
-//           //               selectedItemPosition = 1;
-//           //               Navigator.push(
-//           //                   context,
-//           //                   MaterialPageRoute(
-//           //                       builder: (context) => BottomBarTab()));
-//           //               setState(() {});
-//           //             },
-//           //             child: Text(
-//           //               "see all",
-//           //               style: TextStyle(
-//           //                   fontSize: 15,
-//           //                   fontWeight: FontWeight.w600,
-//           //                   color: ColorConstants.black),
-//           //             ),
-//           //           ),
-//           //         ],
-//           //       ),
-//           //       SizedBox(
-//           //         height: 15,
-//           //       ),
-//           //       for (int i = 0; i < 5; i++) ...[
-//           //         InkWell(
-//           //           onTap: () {
-//           //             Navigator.push(
-//           //                 context,
-//           //                 MaterialPageRoute(
-//           //                     builder: (context) => const DetailsPlaylist(
-//           //                           title: "Playlist1",
-//           //                         )));
-//           //           },
-//           //           child: Padding(
-//           //             padding: const EdgeInsets.symmetric(vertical: 4.0),
-//           //             child: Container(
-//           //                 decoration: BoxDecoration(
-//           //                     border: Border.all(color: ColorConstants.white)),
-//           //                 child: ListTile(
-//           //                   leading: Container(
-//           //                       height: 40,
-//           //                       width: 40,
-//           //                       decoration: BoxDecoration(
-//           //                           borderRadius: BorderRadius.circular(12),
-//           //                           image: const DecorationImage(
-//           //                               image: NetworkImage(
-//           //                                   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
-//           //                               fit: BoxFit.fitHeight))),
-//           //                   subtitle: Marquee(
-//           //                       direction: Axis.horizontal,
-//           //                       directionMarguee: DirectionMarguee.oneDirection,
-//           //                       child: Text(
-//           //                           "Lay Down Your Demo Scratch Vocal. ...Embellish. ...Lay Down Your Vocals. ...Put A Mix On It. ...")),
-//           //                   title: Text(
-//           //                     "Playlist 1",
-//           //                     style: TextStyle(
-//           //                         color: ColorConstants.black, fontSize: 16),
-//           //                   ),
-//           //                   trailing: Icon(
-//           //                     Icons.playlist_play,
-//           //                     color: ColorConstants.black,
-//           //                   ),
-//           //                 )),
-//           //           ),
-//           //         ),
-//           //       ]
-//           //     ],
-//           //   ),
-//           // ),
-//         )));
-//   }
-// }
 
 import 'dart:ui';
 
@@ -299,12 +7,13 @@ import 'package:egy_us_tv_admin/controller/provider/socket_provider.dart';
 import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:egy_us_tv_admin/view/auth/login.dart';
 import 'package:egy_us_tv_admin/view/playlist.dart';
+import 'package:egy_us_tv_admin/view/playlist_details.dart';
 import 'package:egy_us_tv_admin/widgets/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
-
+import "package:egy_us_tv_admin/utils/utils.dart" as nav;
 import '../controller/provider/login_provider.dart';
 import '../socket/connection.dart';
 import '../widgets/alert.dart';
@@ -329,13 +38,26 @@ class _HomeState extends State<Home> {
   void initState() {
     var provider = context.read<PlaylistProvider>();
     var socketProvider = context.read<SocketProvider>();
-      //  socketProvider.connection();
+       socketProvider.connection();
        
     provider.getPlaylist(context);
     // playPrevVideo("http://50.16.82.20/videos/video3.mp4");
     super.initState();
   }
 
+String getGreeting() {
+  final currentTime = DateTime.now();
+  final hour = currentTime.hour;  
+ if (hour >= 5 && hour < 12) {
+    return 'Good Morning';
+  } else if (hour >= 12 && hour < 17) {
+    return 'Good Afternoon';
+  } else if (hour >= 17 && hour < 20) {
+    return 'Good Evening';
+  } else {
+    return 'Good Night';
+  }
+}
 
 
 
@@ -400,10 +122,30 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             height: 5,
                           ),
-                          Text(
-                            "Good Morning",
-                            style: TextStyle(
-                                fontSize: 14, color: ColorConstants.active),
+                          Row(
+                            children: [
+                              Text(
+                                getGreeting(),
+                                style: TextStyle(
+                                    fontSize: 14, color: ColorConstants.active),
+                              ),
+                              SizedBox(width: 10),
+
+                              Builder(builder: (context){
+                                var bloc = context.watch<SocketProvider>();
+                                return bloc.isSocketRunning?
+                                CircleAvatar(
+                                  radius: 7,
+                                  backgroundColor: Colors.green
+
+                                )
+                                 : CircleAvatar(
+                                  radius: 7,
+                                  backgroundColor: Colors.red,
+
+                                );
+                              })
+                            ],
                           ),
                         ],
                       ),
@@ -486,7 +228,8 @@ socketProvider.urls == null
                   child: CircularProgressIndicator.adaptive(),
                 )
               : Container(
-                height: 400,
+                height: 450,
+                width: MediaQuery.of(context).size.width * .7,
                 child: VideoPlayer(socketProvider.controller!))
                   // VideoPlayer(socketProvider.controller!),
                   // _ControlsOverlay(controller: socketProvider.controller),
@@ -500,64 +243,64 @@ socketProvider.urls == null
                                           //   showVolumeButton: false,
                                           // )
                                           ),
-                                  Container(
-                                    height: 200,
-                                    child: ScrollConfiguration(
-                                      behavior: MyCustomScrollBehavior(),
-                                      child: ListView.builder(
-                                          itemCount: images.length,
-                                          shrinkWrap: true,
-                                          physics: AlwaysScrollableScrollPhysics(),
-                                          scrollDirection: Axis.horizontal,
-                                          itemBuilder: (context, index) {
-                                            return Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Stack(
-                                                children: [
-                                                  Container(
-                                                    height: 200,
-                                                    width: 180,
-                                                    decoration: BoxDecoration(
-                                                        color: Colors.black,
-                                                        image: DecorationImage(
-                                                            image: NetworkImage(
-                                                                images[index]),
-                                                            fit: BoxFit.cover)),
-                                                  ),
-                                                  Container(
-                                                    height: 200,
-                                                    width: 180,
-                                                    color: Colors.black12,
-                                                  ),
-                                                  const Positioned(
-                                                      bottom: 15,
-                                                      left: 10,
-                                                      child: Icon(
-                                                        Icons.play_arrow,
-                                                        color: Colors.white,
-                                                      )),
-                                                  Positioned(
-                                                      bottom: 15,
-                                                      right: 10,
-                                                      child: Container(
-                                                        color: Colors.black87,
-                                                        child: const Padding(
-                                                          padding:
-                                                              EdgeInsets.all(3.0),
-                                                          child: Text(
-                                                            "05:20",
-                                                            style: TextStyle(
-                                                                color: Colors.white,
-                                                                fontSize: 11),
-                                                          ),
-                                                        ),
-                                                      )),
-                                                ],
-                                              ),
-                                            );
-                                          }),
-                                    ),
-                                  ),
+                                  // Container(
+                                  //   height: 200,
+                                  //   child: ScrollConfiguration(
+                                  //     behavior: MyCustomScrollBehavior(),
+                                  //     child: ListView.builder(
+                                  //         itemCount: images.length,
+                                  //         shrinkWrap: true,
+                                  //         physics: AlwaysScrollableScrollPhysics(),
+                                  //         scrollDirection: Axis.horizontal,
+                                  //         itemBuilder: (context, index) {
+                                  //           return Padding(
+                                  //             padding: const EdgeInsets.all(8.0),
+                                  //             child: Stack(
+                                  //               children: [
+                                  //                 Container(
+                                  //                   height: 200,
+                                  //                   width: 180,
+                                  //                   decoration: BoxDecoration(
+                                  //                       color: Colors.black,
+                                  //                       image: DecorationImage(
+                                  //                           image: NetworkImage(
+                                  //                               images[index]),
+                                  //                           fit: BoxFit.cover)),
+                                  //                 ),
+                                  //                 Container(
+                                  //                   height: 200,
+                                  //                   width: 180,
+                                  //                   color: Colors.black12,
+                                  //                 ),
+                                  //                 const Positioned(
+                                  //                     bottom: 15,
+                                  //                     left: 10,
+                                  //                     child: Icon(
+                                  //                       Icons.play_arrow,
+                                  //                       color: Colors.white,
+                                  //                     )),
+                                  //                 Positioned(
+                                  //                     bottom: 15,
+                                  //                     right: 10,
+                                  //                     child: Container(
+                                  //                       color: Colors.black87,
+                                  //                       child: const Padding(
+                                  //                         padding:
+                                  //                             EdgeInsets.all(3.0),
+                                  //                         child: Text(
+                                  //                           "05:20",
+                                  //                           style: TextStyle(
+                                  //                               color: Colors.white,
+                                  //                               fontSize: 11),
+                                  //                         ),
+                                  //                       ),
+                                  //                     )),
+                                  //               ],
+                                  //             ),
+                                  //           );
+                                  //         }),
+                                  //   ),
+                                  // ),
                                 ],
                               );
                             }
@@ -585,7 +328,7 @@ socketProvider.urls == null
                                           builder: (context) => Playlist()));
                                 },
                                 child: Text(
-                                  "see all",
+                                  "See All",
                                   style: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w600,
@@ -618,48 +361,90 @@ socketProvider.urls == null
                                                       .width *
                                                   .3,
                                               decoration: BoxDecoration(
+                                                color: provider.playlist!.data[i].isRunning ? Colors.green[100] :Colors.white,
                                                   border: Border.all(
                                                       color: ColorConstants
                                                           .white)),
                                               child: ListTile(
+                                                onTap: (){
+                                                  
+nav.push(context,   DetailsPlaylist(
+                                                  title: provider.playlist!.data[i].name,
+                                                  playlistID: provider.playlist!.data[i].id,
+                                                  videos: provider.playlist!.data[i].
+                                                    videos
+                                                ),);   
+                                                },
                                                 contentPadding: EdgeInsets.zero,
                                                 leading: Container(
                                                     height: 40,
                                                     width: 40,
+                                                    child: Icon(Icons.list),
                                                     decoration: BoxDecoration(
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(12),
-                                                        image: const DecorationImage(
-                                                            image: NetworkImage(
-                                                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
-                                                            fit: BoxFit
-                                                                .fitHeight))),
-                                                subtitle: Marquee(
+                                                        // image: const DecorationImage(
+                                                        //     image: NetworkImage(
+                                                        //         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHXxIYiq_T7DYdZfqlUfa9Lg3P2cM6xiR7177e-UtoOhKZejmht22JGGrcvfm1TM02V3U&usqp=CAU"),
+                                                        //     fit: BoxFit
+                                                        //         .fitHeight)
+                                                        )
+                                                                ),
+                                                // subtitle: Marquee(
+                                                //     direction: Axis.horizontal,
+                                                //     directionMarguee:
+                                                //         DirectionMarguee
+                                                //             .oneDirection,
+                                                //     child: Container(
+                                                //       width: 200,
+                                                      // child: const Text(
+                                                      //   "Lay Down Your Demo Scratch Vocal. ...Embellish. ...Lay Down Your Vocals. ...Put A Mix On It. ...",
+                                                        // maxLines: 1,
+                                                        // overflow: TextOverflow
+                                                        //     .ellipsis,
+                                                      // ),
+                                                    // )),
+                                                title: Marquee(
                                                     direction: Axis.horizontal,
                                                     directionMarguee:
                                                         DirectionMarguee
                                                             .oneDirection,
-                                                    child: Container(
-                                                      width: 200,
-                                                      child: const Text(
-                                                        "Lay Down Your Demo Scratch Vocal. ...Embellish. ...Lay Down Your Vocals. ...Put A Mix On It. ...",
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                      ),
-                                                    )),
-                                                title: Text(
-                                                provider.playlist!.data[i].name ,
-                                                  style: TextStyle(
+                                                  child: Container(
+                                                    width: MediaQuery.of(context).size.width * 0.20,
+                                                    child: Text(
+                                                    provider.playlist!.data[i].name ,
+                                                      style: TextStyle(
+                                                          color:
+                                                              ColorConstants.black,
+                                                          fontSize: 16),
+                                                            maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                    ),
+                                                  ),
+                                                ),
+                                                trailing:  
+                                                 InkWell(
+                                                  onTap: ()async{
+                                                    var provider = context.read<PlaylistProvider>();
+                                                   var message = await provider.runPlaylist(context, provider.playlist!.data[i].id);
+                                                   if (message != null) {
+                                                     showSnackBar(context, message);
+                                                   }
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.all(8.0),
+                                                    child: Icon(
+                                                      Icons.play_arrow,
                                                       color:
-                                                          ColorConstants.black,
-                                                      fontSize: 16),
+                                                          ColorConstants.lightGreen,
+                                                    ),
+                                                  ),
                                                 ),
-                                                trailing: Icon(
-                                                  Icons.playlist_play,
-                                                  color: ColorConstants.black,
-                                                ),
+                                              
+                                            
+                                          
                                               )),
                                         ),
                                  

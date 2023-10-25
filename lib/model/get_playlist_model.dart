@@ -39,6 +39,7 @@ class GetPlaylistModel {
 class Datum {
     String id;
     String name;
+    bool isRunning;
     DateTime createdAt;
     DateTime updatedAt;
     List<Video> videos;
@@ -46,6 +47,7 @@ class Datum {
     Datum({
         required this.id,
         required this.name,
+        required this.isRunning,
         required this.createdAt,
         required this.updatedAt,
         required this.videos,
@@ -53,6 +55,7 @@ class Datum {
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
+        isRunning: json["isRunning"],
         name: json["name"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
@@ -61,6 +64,7 @@ class Datum {
 
     Map<String, dynamic> toJson() => {
         "id": id,
+        "isRunning": isRunning,
         "name": name,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),

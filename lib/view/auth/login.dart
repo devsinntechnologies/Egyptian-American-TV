@@ -24,11 +24,12 @@ class _EmailLoginState extends State<EmailLogin> {
   TextEditingController password = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(    
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        var provider = context.read<SocketProvider>();
-        provider.connection();
-      }),
+      // floatingActionButton: FloatingActionButton(onPressed: (){
+      //   var provider = context.read<SocketProvider>();
+      //   provider.connection();
+      // }),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: Builder(
@@ -71,21 +72,19 @@ class _EmailLoginState extends State<EmailLogin> {
                               ),
                         ),
                         const SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         Padding(
                           padding: const EdgeInsets.all(15.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              
                               SizedBox(
-                                width: 250,
+                                width: size.width * 0.50,
                                 child: CustomFormField(
                                   color: Colors.white70,
-                                  hintText: "username/email",
+                                  hintText: "Email",
                                   icon: Icons.email,
                                   border: 10,
                                   controller: email,
@@ -102,7 +101,7 @@ class _EmailLoginState extends State<EmailLogin> {
                                 height: 10,
                               ),
                               SizedBox(
-                                width: 250,
+                                width: size.width * 0.50,
                                 child: CustomFormField(
                                   color: Colors.white70,
                                   hintText: "Password",
@@ -140,7 +139,7 @@ class _EmailLoginState extends State<EmailLogin> {
                                 border:
                                     Border.all(color: ColorConstants.primaryColor)),
                             height: 45,
-                            width: 250,
+                            width: size.width * 0.50,
                             child: Center(
                               child: Text(
                                 'Login',
@@ -165,36 +164,37 @@ class _EmailLoginState extends State<EmailLogin> {
                         // const SizedBox(
                         //   height: 15,
                         // ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              child: Text('Term of use'),
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => WebViewScreen(2),
-                                //   ),
-                                // );
-                              },
-                            ),
-                            const SizedBox(
-                              width: 15,
-                            ),
-                            InkWell(
-                              child: Text('Privacy Policy'),
-                              onTap: () {
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //     builder: (context) => WebViewScreen(3),
-                                //   ),
-                                // );
-                              },
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.center,
+                        //   children: [
+                        //     InkWell(
+                        //       child: Text('Term of use'),
+                        //       onTap: () {
+                        //         // Navigator.push(
+                        //         //   context,
+                        //         //   MaterialPageRoute(
+                        //         //     builder: (context) => WebViewScreen(2),
+                        //         //   ),
+                        //         // );
+                        //       },
+                        //     ),
+                        //     const SizedBox(
+                        //       width: 15,
+                        //     ),
+                        //     InkWell(
+                        //       child: Text('Privacy Policy'),
+                        //       onTap: () {
+                        //         // Navigator.push(
+                        //         //   context,
+                        //         //   MaterialPageRoute(
+                        //         //     builder: (context) => WebViewScreen(3),
+                        //         //   ),
+                        //         // );
+                        //       },
+                        //     ),
+                        //   ],
+                        // ),
+                       
                         const SizedBox(
                           height: 50,
                         ),

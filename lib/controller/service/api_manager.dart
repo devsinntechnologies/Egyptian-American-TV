@@ -41,6 +41,23 @@ class ApiManager {
       showSnackBar(context, e.toString());
     }
   }
+  
+  /// RUN Playlist
+  static runPlaylist(context,id) async {
+    try {
+      var url = Uri.parse( onlyBase +":" + socketPort + "/"+ runPlaylistEndpoint + id);
+      var response = await http.get(url);
+// debugger();
+      var res = jsonDecode(response.body);
+
+      // var dat = GetPlaylistModel.fromJson(res);
+
+      // print(dat);
+      return res["message"];
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
 
   ///  Add New PlayList
 
@@ -69,12 +86,12 @@ class ApiManager {
       var url =
           Uri.http(base, "/api/"+deletePlaylistVideoEndpoint, queryParameters);
       var response = await http.delete(url);
-debugger();
+// debugger();
       var res = jsonDecode(response.body);
       showSnackBar(context, res["message"]);
       return res;
     } catch (e) {
-      debugger();
+      // debugger();
 
       showSnackBar(context, e.toString());
     }

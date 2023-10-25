@@ -6,6 +6,7 @@ import 'package:egy_us_tv_admin/controller/service/api_manager.dart';
 import 'package:egy_us_tv_admin/model/video_model.dart';
 import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:egy_us_tv_admin/view/webview_upload_video.dart';
+import 'package:egy_us_tv_admin/widgets/video_player.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -18,7 +19,7 @@ class DetailsPlaylist extends StatefulWidget {
   final String? title;
   final playlistID;
   final List<Video>? videos;
-  const DetailsPlaylist({super.key, this.title, this.videos,this.playlistID});
+  const DetailsPlaylist({super.key, this.title, this.videos, this.playlistID});
 
   @override
   State<DetailsPlaylist> createState() => _DetailsPlaylistState();
@@ -26,19 +27,23 @@ class DetailsPlaylist extends StatefulWidget {
 
 class _DetailsPlaylistState extends State<DetailsPlaylist> {
   File? videopath;
-  getvideo(context) async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? image = await picker.pickVideo(source: ImageSource.gallery);
-    debugger();
-    if (image != null) {
-      videopath = File(image.path);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SelectedVideo(path: videopath,playlistID: widget.playlistID,order: "2",)));
-      setState(() {});
-    }
-  }
+  // getvideo(context) async {
+  //   final ImagePicker picker = ImagePicker();
+  //   final XFile? image = await picker.pickVideo(source: ImageSource.gallery);
+  //   debugger();
+  //   if (image != null) {
+  //     videopath = File(image.path);
+  //     Navigator.push(
+  //         context,
+  //         MaterialPageRoute(
+  //             builder: (context) => SelectedVideo(
+  //                   path: videopath,
+  //                   playlistID: widget.playlistID,
+  //                   order: "2",
+  //                 )));
+  //     setState(() {});
+  //   }
+  // }
 
   List images = [
     "https://www.otto.de/updated/app/uploads/2019/06/instagram_stories_und_beitraege_reposten-152x232.jpg",
@@ -54,6 +59,43 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(top: 10, right: 10),
+              child: InkWell(
+                onTap: () {
+                  push(
+                      context,
+                      WebviewUploadVideo(
+                          playListID: widget.playlistID, order: "2"));
+                  // getvideo(context);
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: ColorConstants.active,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(
+                          Icons.add,
+                          color: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "Add Video ",
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
           leading: Padding(
             padding: const EdgeInsets.all(14.0),
             child: InkWell(
@@ -88,234 +130,244 @@ class _DetailsPlaylistState extends State<DetailsPlaylist> {
                 color: ColorConstants.black, fontWeight: FontWeight.w500),
           ),
         ),
-        body:  isLoading ?  Center(child: CircularProgressIndicator(backgroundColor: ColorConstants.active,) ) :  Stack(
-          children: [
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        body: isLoading
+            ? Center(
+                child: CircularProgressIndicator(
+                backgroundColor: ColorConstants.active,
+              ))
+            : Stack(
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const CircleAvatar(
-                        radius: 50,
-                        backgroundImage: NetworkImage(
-                            "assets/main_logo.png"),
-                      ),
-                      SizedBox(
-                        width: 25,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "${widget.title}",
-                            style: TextStyle(
-                                color: ColorConstants.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 22),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            children:  [
-                              Icon(
-                                Icons.video_collection,
-                                size: 20,
-                                color: Colors.black,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text("${widget.videos!.length} Videos")
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: widget.videos!.length,
-                        itemBuilder: (context, index) {
-                          VideoModel videoModel = VideoModel.fromJson(widget.videos![index].toJson());
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              height: 120,
-                              decoration:
-                                  BoxDecoration(color: Color(0xffF1F1F1)),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        height: 110,
-                                        width: 100,
-                                        // decoration: BoxDecoration(
-                                        //   image: DecorationImage(
-                                        //       image:
-                                        //           NetworkImage(images[index]),
-                                        //       fit: BoxFit.cover),
-                                        // ),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const CircleAvatar(
+                              radius: 50,
+                              backgroundImage:
+                                  AssetImage("assets/main_logo.png"),
+                            ),
+                            SizedBox(
+                              width: 25,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${widget.title}",
+                                  style: TextStyle(
+                                      color: ColorConstants.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.video_collection,
+                                      size: 20,
+                                      color: Colors.black,
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text("${widget.videos!.length} Videos")
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: widget.videos!.isEmpty
+                              ? Center(
+                                  child: const Text(
+                                  "No Video!",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ))
+                              : ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: widget.videos!.length,
+                                  itemBuilder: (context, index) {
+                                    VideoModel videoModel = VideoModel.fromJson(
+                                        widget.videos![index].toJson());
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        height: 120,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xffF1F1F1)),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  height: 50,
+                                                  width: 50,
+                                                  alignment: Alignment.center,
+                                                  child: Text("${index+1}",style: TextStyle(fontSize: 30,fontWeight: FontWeight.bold),),
+                                                  // decoration: BoxDecoration(
+                                                  //   image: DecorationImage(
+                                                  //       image:
+                                                  //           NetworkImage(images[index]),
+                                                  //       fit: BoxFit.cover),
+                                                  // ),
 
-                                        // child: JkVideoControlPanel(
-                                        //     socketProvider.controller!,
-                                        //     showClosedCaptionButton: false,
-                                        //     showFullscreenButton: false,
-                                        //     showVolumeButton: false,
-                                        //   ),
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            "${videoModel.name}",
-                                            style: TextStyle(
-                                                color: ColorConstants.black,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w600),
-                                          ),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text("${videoModel.createdAt}"),
-                                          SizedBox(
-                                            height: 5,
-                                          ),
-                                          // Text("05:02 min")
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 15.0),
-                                    child: Row(
-                                      children: [
-                                        InkWell(
-                                          onTap: ()async{
-                                            setState(() {
-                                              isLoading= true;
-                                            });
-                                            await ApiManager.deletePlaylistVideo(context, widget.videos![index].id, widget.playlistID);
-setState(() {
-                                              isLoading= false;
-                                            });
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.red,
-                                                borderRadius:
-                                                    BorderRadius.circular(8)),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Row(
-                                                children: const [
-                                                  Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                        color: Colors.white),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  // Icon(
-                                                  //   Icons.delete,
-                                                  //   color: Colors.white,
-                                                  //   size: 20,
-                                                  // )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.green,
-                                              borderRadius:
-                                                  BorderRadius.circular(8)),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Row(
-                                              children: const [
-                                                Icon(
-                                                  Icons.play_arrow,
-                                                  color: Colors.white,
-                                                  size: 20,
-                                                )
+                                                  // child: JkVideoControlPanel(
+                                                  //     socketProvider.controller!,
+                                                  //     showClosedCaptionButton: false,
+                                                  //     showFullscreenButton: false,
+                                                  //     showVolumeButton: false,
+                                                  //   ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      "${videoModel.name}",
+                                                      style: TextStyle(
+                                                          color: ColorConstants
+                                                              .black,
+                                                          fontSize: 16,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    Text(
+                                                        "${videoModel.createdAt}"),
+                                                    SizedBox(
+                                                      height: 5,
+                                                    ),
+                                                    // Text("05:02 min")
+                                                  ],
+                                                ),
                                               ],
                                             ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
 
-                                  // Icon(Icons.play_arrow),
-                                  // const Icon(
-                                  //   Icons.delete,
-                                  // )
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 40.0, right: 20),
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: InkWell(
-                  onTap: () {
-                    push(context, WebviewUploadVideo(playListID: widget.playlistID,order: "2"));
-                    // getvideo(context);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: const [
-                          Icon(
-                            Icons.add,
-                            color: Colors.black,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            "Add Video ",
-                          )
-                        ],
-                      ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  right: 15.0),
+                                              child: Row(
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () async {
+                                                      setState(() {
+                                                        isLoading = true;
+                                                      });
+                                                      await ApiManager
+                                                          .deletePlaylistVideo(
+                                                              context,
+                                                              widget
+                                                                  .videos![
+                                                                      index]
+                                                                  .id,
+                                                              widget
+                                                                  .playlistID);
+                                                      setState(() {
+                                                        isLoading = false;
+                                                      });
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.red,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8)),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.0),
+                                                        child: Row(
+                                                          children: const [
+                                                            Text(
+                                                              "Delete",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            ),
+                                                            // Icon(
+                                                            //   Icons.delete,
+                                                            //   color: Colors.white,
+                                                            //   size: 20,
+                                                            // )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    width: 20,
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      push(
+                                                          context,
+                                                          VideoPreviewer(
+                                                            path: widget
+                                                                .videos![index]
+                                                                .videoLink,
+                                                          ));
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                          color: Colors.green,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(8)),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.all(8.0),
+                                                        child: Row(
+                                                          children: const [
+                                                            Icon(
+                                                              Icons.play_arrow,
+                                                              color:
+                                                                  Colors.white,
+                                                              size: 20,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+
+                                            // Icon(Icons.play_arrow),
+                                            // const Icon(
+                                            //   Icons.delete,
+                                            // )
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                        )
+                      ],
                     ),
                   ),
-                ),
-              ),
-            )
-          ],
-        )
+                ],
+              )
 
         //  GridView(
         //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
