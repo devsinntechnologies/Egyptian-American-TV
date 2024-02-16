@@ -3,7 +3,6 @@ import 'package:egy_us_tv_admin/utils/preferences.dart';
 import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:egy_us_tv_admin/view/home.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 
 class LoginProvider extends ChangeNotifier {
   bool isLoading = false;
@@ -24,7 +23,7 @@ class LoginProvider extends ChangeNotifier {
         await Preference.saveToken("${res["data"]["access_token"]}");
         pushUntil(context, Home());
       } else {
-        snackBar(context, title: '${res['message']}');
+        showSnackBar(context, '${res['message']}');
         isLoading = false;
         notifyListeners();
       }

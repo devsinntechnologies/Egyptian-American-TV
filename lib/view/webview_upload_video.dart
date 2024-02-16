@@ -101,7 +101,9 @@ class _WebviewUploadVideoState extends State<WebviewUploadVideo> {
       await _controller.setBackgroundColor(Colors.transparent);
       await _controller.setPopupWindowPolicy(WebviewPopupWindowPolicy.deny);
       // await _controller.loadUrl('http://arhamsarwar786.github.io/egy-video-webview?id=${widget.playListID}&order=${widget.order}');
-      await _controller.loadUrl('http://localhost:5173?id=${widget.playListID}&order=${widget.order}');
+      // await _controller.loadUrl('http://localhost:5173?id=${widget.playListID}&order=${widget.order}');
+      await _controller.loadUrl('http://3.80.91.77/egy-webview/egy-video-webview/index.html?id=${widget.playListID}&order=${widget.order}');
+
 
       if (!mounted) return;
       setState(() {});

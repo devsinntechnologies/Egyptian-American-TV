@@ -1,4 +1,4 @@
-import 'package:nb_utils/nb_utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Preference {
   static String tokenKey = "token";

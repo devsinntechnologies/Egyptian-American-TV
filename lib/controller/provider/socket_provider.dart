@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:video_player/video_player.dart';
 
+import '../service/endpoint.dart';
 import '/model/linkModel.dart';
 
-  String socketUrl = "http://3.80.91.77";
-  String socketPort = "5000";
-  String socketVideoPath = "/videos/";
 class SocketProvider extends ChangeNotifier {
   LinksModel? urls;
   late IO.Socket _socket;
@@ -59,6 +57,7 @@ class SocketProvider extends ChangeNotifier {
         }
       }
     });
+    
     socket.onDisconnect((_){
       print("Disconnect");
       isSocketRunning = false;

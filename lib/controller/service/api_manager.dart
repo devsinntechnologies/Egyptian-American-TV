@@ -42,6 +42,25 @@ class ApiManager {
     }
   }
   
+  
+  /// Get Play List API
+  static getRTCToken(context) async {
+    try {
+      // debugger();
+      var url = Uri.parse( "http://192.168.31.142" + ":$socketPort"  + "/rtc/channel/publisher/userAccount/1");
+      var response = await http.get(url);
+// debugger();
+      var res = jsonDecode(response.body);
+
+      
+
+      print(res);
+      return res["rtcToken"];
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+  
   /// RUN Playlist
   static runPlaylist(context,id) async {
     try {
@@ -85,6 +104,7 @@ class ApiManager {
       };
       var url =
           Uri.http(base, "/api/"+deletePlaylistVideoEndpoint, queryParameters);
+          debugger();
       var response = await http.delete(url);
 // debugger();
       var res = jsonDecode(response.body);

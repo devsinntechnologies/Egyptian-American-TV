@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:egy_us_tv_admin/agora_setup/agora_preview.dart';
 import 'package:egy_us_tv_admin/config/color.dart';
 import 'package:egy_us_tv_admin/controller/provider/playlist_provider.dart';
 import 'package:egy_us_tv_admin/controller/provider/socket_provider.dart';
@@ -8,9 +9,7 @@ import 'package:egy_us_tv_admin/utils/utils.dart';
 import 'package:egy_us_tv_admin/view/auth/login.dart';
 import 'package:egy_us_tv_admin/view/playlist.dart';
 import 'package:egy_us_tv_admin/view/playlist_details.dart';
-import 'package:egy_us_tv_admin/widgets/animation.dart';
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
 import 'package:provider/provider.dart';
 import 'package:video_player/video_player.dart';
 import "package:egy_us_tv_admin/utils/utils.dart" as nav;
@@ -161,6 +160,9 @@ String getGreeting() {
                                 buttoncolor: ColorConstants.red,
                                 buttoncolor2: ColorConstants.black,
                                 onPressed: () {
+                                  Navigator.pop(context);
+
+                                  nav.push(context, AgoraMyPreview() );
                                   // logout(context: context).then((value) {
                                   //   selectedItemPosition = 0;
 
@@ -405,12 +407,7 @@ nav.push(context,   DetailsPlaylist(
                                                         //     .ellipsis,
                                                       // ),
                                                     // )),
-                                                title: Marquee(
-                                                    direction: Axis.horizontal,
-                                                    directionMarguee:
-                                                        DirectionMarguee
-                                                            .oneDirection,
-                                                  child: Container(
+                                                title:  Container(
                                                     width: MediaQuery.of(context).size.width * 0.20,
                                                     child: Text(
                                                     provider.playlist!.data[i].name ,
@@ -423,7 +420,6 @@ nav.push(context,   DetailsPlaylist(
                                                               .ellipsis,
                                                     ),
                                                   ),
-                                                ),
                                                 trailing:  
                                                  InkWell(
                                                   onTap: ()async{
